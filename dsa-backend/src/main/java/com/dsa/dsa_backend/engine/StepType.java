@@ -6,5 +6,6 @@ public enum StepType {
     SET,
     GET,
     COMPARE,
+    SHIFT,
     SWAP
 }
