@@ -2,6 +2,7 @@ package com.dsa.dsa_backend.engine;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * It will store steps of execution for one operation
@@ -15,8 +16,8 @@ public class StepRecorder {
         steps = new ArrayList<>();
     }
 
-    public boolean addRecord(StepType stepType, List<Integer> snapshot, int highlightedIndices[], String description) {
-        return steps.add(new Step(stepType, snapshot, highlightedIndices, description));
+    public boolean addRecord(StepType stepType, List<Integer> snapshot, int highlightedIndices[], Map<String, Integer> helpers, String description) {
+        return steps.add(new Step(stepType, snapshot, highlightedIndices, helpers, description));
     }
 
     public List<Step> getSteps() {

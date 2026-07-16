@@ -2,14 +2,15 @@ package com.dsa.dsa_backend.traced;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.dsa.collections.linear.JArrayList;
 import com.dsa.dsa_backend.engine.StepRecorder;
 import com.dsa.dsa_backend.engine.StepType;
 
 public class TracedJArrayList {
-    private JArrayList<Integer> list;
-    private StepRecorder recorder;
+    private final JArrayList<Integer> list;
+    private final StepRecorder recorder;
 
     private List<Integer> snapshot() {
         List<Integer> updated_list = new ArrayList<>();
@@ -32,7 +33,13 @@ public class TracedJArrayList {
     boolean add(int element) {
         list.add(element); // actually adding element in JArrayList
 
-        recorder.addRecord(StepType.ADD, snapshot(), new int[] {list.size()-1}, "adding element at last index");
+        recorder.addRecord(
+            StepType.ADD,
+            snapshot(),
+            new int[] {list.size()-1},
+                Map.of(),
+            "adding element at last index"
+        );
 
         return true;
     }
@@ -40,102 +47,226 @@ public class TracedJArrayList {
     boolean addFirst(int element) {
         list.addFirst(element);
 
-        recorder.addRecord(StepType.SHIFT, snapshot(), new int[] {0}, "shifting all elements to one index right");
-
+        recorder.addRecord(
+            StepType.SHIFT,
+            snapshot(),
+            new int[] {0},
+                Map.of(),
+            "shifting all elements to one index right"
+        );
         return true;
     }
 
     boolean remove(int index) {
         list.remove(index);
 
-        recorder.addRecord(StepType.REMOVE, snapshot(), new int[] {index}, "removing element on the index: " + index);
-
+        recorder.addRecord(
+            StepType.REMOVE,
+            snapshot(),
+            new int[] {index},
+                Map.of(),
+            "removing element on the index: " + index
+        );
         return true;
     }
 
     boolean set(int index, int element) {
         list.set(index, element);
 
-        recorder.addRecord(StepType.SET, snapshot(), new int[] {index}, "updating element on the index: " + index);
-
+        recorder.addRecord(
+            StepType.SET,
+            snapshot(),
+            new int[] {index},
+                Map.of(),
+            "updating element on the index: " + index
+        );
         return true;
     }
 
     boolean get(int index) {
         int value = list.get(index);
 
-        recorder.addRecord(StepType.GET, snapshot(), new int[] {index}, "value on the index: " + index + " is: " + value);
-
+        recorder.addRecord(
+            StepType.GET,
+            snapshot(),
+            new int[] {index},
+                Map.of(),
+            "value on the index: " + index + " is: " + value
+        );
         return true;
     }
 
     /* searching operations */
     boolean linear_search(int target) {
-      
-        if(!list.contains(target))
-        {
-            recorder.addRecord(StepType.NOT_FOUND, snapshot(), new int[] {}, "target element: " + target + " not found in the list");
-            return false;
-        }
-    
         for(int i = 0 ; i<list.size() ; i++)
         {
-            recorder.addRecord(StepType.COMPARE, snapshot(), new int[] {i}, "comparing element on the index: " + i + " with target: " + target);
+            recorder.addRecord(
+                StepType.COMPARE,
+                snapshot(),
+                new int[] {i},
+                    Map.of(),
+                "comparing element on the index: " + i + " with target: " + target
+            );
             if(list.get(i) == target)
             {
-                recorder.addRecord(StepType.FOUND, snapshot(), new int[] {i}, "target element: " + target + " found on the index: " + i);
+                recorder.addRecord(
+                    StepType.FOUND,
+                    snapshot(),
+                    new int[] {i},
+                        Map.of(),
+                    "target element: " + target + " found on the index: " + i
+                );
                 return true;
-                
             }
-
         }
-        return false;
 
+        recorder.addRecord(
+            StepType.NOT_FOUND,
+            snapshot(),
+            new int[] {},
+                Map.of(),
+            "target element: " + target + " not found in the list"
+        );
+        
+        return true;
     }
 
     boolean binary_search(int target) {
+        int start=0;
+        int end=list.size()-1;
+        int mid;
 
+        while(start < end) {
+            mid = start + ((end-start)/2);
 
+            recorder.addRecord(
+                StepType.COMPARE,
+                snapshot(),
+                new int[] {start, mid, end},
+                    Map.of(),
+                "comparing element on the index: " + mid + " with target: " + target
+            );
 
+            if(list.get(mid) == target) {
+                recorder.addRecord(
+                    StepType.FOUND,
+                    snapshot(),
+                    new int[] {mid},
+                        Map.of(),
+                    "target element: " + target + " found at index: " + mid
+                );
+                return true;
+
+            } else if(target < list.get(mid)) {
+                end = mid-1;
+            } else {
+                start = mid +1;
+            }
+        }
+
+        recorder.addRecord(
+            StepType.NOT_FOUND,
+            snapshot(),
+            new int[] {},
+                Map.of(),
+            "target element: " + target + " not found in the list"
+        );
+        return true;
     }
 
     /* sorting operations */
     boolean bubble_sort() {
-
-        boolean swap = false;
+        boolean swap;
         for(int i = 0 ; i<list.size()-1 ; i++)
         {
+            swap = false;
             for(int j = 0 ; j<list.size()-i-1 ; j++)
             {
-                recorder.addRecord(StepType.COMPARE, snapshot(), new int[] {j, j+1}, "comparing element on the index: " + j + " with element on the index: " + (j+1));
+                recorder.addRecord(
+                    StepType.COMPARE,
+                    snapshot(),
+                    new int[] {j, j+1},
+                        Map.of(),
+                    "comparing element on the index: " + j + " with " + (j+1)
+                );
+
                 if(list.get(j) > list.get(j+1))
                 {
                     swap = true;
                     int temp = list.get(j);
                     list.set(j, list.get(j+1));
                     list.set(j+1, temp);
-                    recorder.addRecord(StepType.SWAP, snapshot(), new int[] {j, j+1}, "swapping element on the index: " + j + " with element on the index: " + (j+1));
+                    recorder.addRecord(
+                        StepType.SWAP,
+                        snapshot(),
+                        new int[] {j, j+1},
+                            Map.of(),
+                        "swapping element on the index: " + j + " with " + (j+1)
+                    );
                 }
             }
 
             if(!swap)
                 break;
-            
         }
+
+        recorder.addRecord(
+            StepType.SORT,
+            snapshot(),
+            new int[] {},
+                Map.of(),
+            "array is now sorted"
+        );
         return true;
-
-
     }
 
     boolean insertion_sort() {
+        for(int i=1; i<list.size(); i++) {
+            int j = i-1;
+            int backup = list.get(i);
 
+            recorder.addRecord(
+                    StepType.COMPARE,
+                    snapshot(),
+                    new int[] {i, j},
+                    Map.of("backup", backup),
+                    "comparing backup with left array"
+            );
+
+            while(j >= 0 && list.get(j) > backup) {
+                list.set(j+1, list.get(j));
+                recorder.addRecord(
+                        StepType.SHIFT,
+                        snapshot(),
+                        new int[] {j, j+1},
+                        Map.of("backup", backup),
+                        "shifting each element on index: " + j + " to " + j+1
+                );
+
+                j--;
+            }
+
+            list.set(j+1, backup);
+            recorder.addRecord(
+                    StepType.SET,
+                    snapshot(),
+                    new int[] {j+1},
+                    Map.of("backup", backup),
+                    "setting " + backup + " on index: " + j+1
+            );
+        }
+
+        recorder.addRecord(
+                StepType.SORT,
+                snapshot(),
+                new int[] {},
+                Map.of(),
+                "array is now sorted"
+        );
+        return true;
     }
 
-    boolean merge_sort() {
-
-    }
-
-    boolean quick_sort() {
-
-    }
+    // TODO do this on priority basis after completing website.
+//    boolean merge_sort()
+//    boolean quick_sort(
 }

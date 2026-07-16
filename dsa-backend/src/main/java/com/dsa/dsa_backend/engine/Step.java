@@ -1,6 +1,7 @@
 package com.dsa.dsa_backend.engine;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * It is one state of execution steps:
@@ -11,6 +12,7 @@ public class Step {
     private final StepType stepType;
     private final List<Integer> snapshot;
     private final int highlightedIndices[];
+    private final Map<String, Integer> helpers;
     private final String description;
 
     // Constructor
@@ -18,17 +20,20 @@ public class Step {
         StepType stepType,
         List<Integer> snapshot,
         int highlightedIndices[],
+        Map<String, Integer> helpers,
         String description
     ) {
         this.stepType = stepType;
         this.snapshot = snapshot;
         this.highlightedIndices = highlightedIndices;
+        this.helpers = helpers;
         this.description = description;
     }
 
     // Getters
     public StepType getStepType() {return stepType;}
     public List<Integer> getSnapshot() {return snapshot;}
-    public int[] getHighlightedIndeices() {return highlightedIndices;}
+    public int[] getHighlightedIndices() {return highlightedIndices;}
+    public Map<String, Integer> getHelpers() {return helpers;}
     public String getDescription() {return description;}
 }
