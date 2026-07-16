@@ -7,5 +7,7 @@ public enum StepType {
     GET,
     COMPARE,
     SHIFT,
+    FOUND, 
+    NOT_FOUND,
     SWAP
 }
