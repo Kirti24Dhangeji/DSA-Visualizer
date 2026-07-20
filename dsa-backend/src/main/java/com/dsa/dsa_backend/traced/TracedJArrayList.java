@@ -136,7 +136,7 @@ public class TracedJArrayList {
         int end=list.size()-1;
         int mid;
 
-        while(start < end) {
+        while(start <= end) {
             mid = start + ((end-start)/2);
 
             recorder.addRecord(

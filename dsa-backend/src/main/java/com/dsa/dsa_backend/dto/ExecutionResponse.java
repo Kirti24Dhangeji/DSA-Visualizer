@@ -5,11 +5,8 @@ import java.util.List;
 import com.dsa.dsa_backend.engine.ExecutionTrace;
 import com.dsa.dsa_backend.engine.Step;
 
-import lombok.Getter;
-
 public class ExecutionResponse
 {
-    @Getter
     private final List<Step> steps;
     private final int totalSteps;
 
@@ -19,4 +16,11 @@ public class ExecutionResponse
         this.totalSteps = trace.totalSteps();
     }
 
+    public List<Step> getSteps() {
+        return steps;
+    }
+
+    public int getTotalSteps() {
+        return totalSteps;
+    }
 }
