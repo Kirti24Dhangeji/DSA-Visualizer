@@ -30,7 +30,7 @@ public class TracedJArrayList {
      * implementation of methods that will be recorded for visualizing.
      */
     /* CRUD operations */
-    boolean add(int element) {
+    public boolean add(int element) {
         list.add(element); // actually adding element in JArrayList
 
         recorder.addRecord(
@@ -44,7 +44,7 @@ public class TracedJArrayList {
         return true;
     }
 
-    boolean addFirst(int element) {
+    public boolean addFirst(int element) {
         list.addFirst(element);
 
         recorder.addRecord(
@@ -57,7 +57,7 @@ public class TracedJArrayList {
         return true;
     }
 
-    boolean remove(int index) {
+    public boolean remove(int index) {
         list.remove(index);
 
         recorder.addRecord(
@@ -70,7 +70,7 @@ public class TracedJArrayList {
         return true;
     }
 
-    boolean set(int index, int element) {
+    public boolean set(int index, int element) {
         list.set(index, element);
 
         recorder.addRecord(
@@ -83,7 +83,7 @@ public class TracedJArrayList {
         return true;
     }
 
-    boolean get(int index) {
+    public boolean get(int index) {
         int value = list.get(index);
 
         recorder.addRecord(
@@ -97,7 +97,7 @@ public class TracedJArrayList {
     }
 
     /* searching operations */
-    boolean linear_search(int target) {
+    public boolean linear_search(int target) {
         for(int i = 0 ; i<list.size() ; i++)
         {
             recorder.addRecord(
@@ -131,7 +131,7 @@ public class TracedJArrayList {
         return true;
     }
 
-    boolean binary_search(int target) {
+    public boolean binary_search(int target) {
         int start=0;
         int end=list.size()-1;
         int mid;
@@ -175,7 +175,7 @@ public class TracedJArrayList {
     }
 
     /* sorting operations */
-    boolean bubble_sort() {
+    public boolean bubble_sort() {
         boolean swap;
         for(int i = 0 ; i<list.size()-1 ; i++)
         {
@@ -220,7 +220,7 @@ public class TracedJArrayList {
         return true;
     }
 
-    boolean insertion_sort() {
+    public boolean insertion_sort() {
         for(int i=1; i<list.size(); i++) {
             int j = i-1;
             int backup = list.get(i);
@@ -266,7 +266,7 @@ public class TracedJArrayList {
         return true;
     }
 
-    // TODO do this on priority basis after completing website.
+//    TODO do this on priority basis after completing website.
 //    boolean merge_sort()
 //    boolean quick_sort(
 }
