@@ -8,6 +8,7 @@ public class DsaBackendApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(DsaBackendApplication.class, args);
+		System.out.println("\n\n\n=== 'DSA-VISUALIZER' started===\n\n\n");
 	}
 
 }
