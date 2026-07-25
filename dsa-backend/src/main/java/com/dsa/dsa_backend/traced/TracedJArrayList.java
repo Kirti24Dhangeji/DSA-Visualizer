@@ -74,7 +74,7 @@ public class TracedJArrayList {
                 snapshot(),
                 new int[] {},
                 Map.of(),
-                "ERROR: " + e.getMesssage()
+                "ERROR: " + e.getMessage()
             );
         }
         return true;
@@ -91,20 +91,38 @@ public class TracedJArrayList {
                     Map.of(),
                 "updating element on the index: " + index
             );
-        } catch()
+        } catch(IllegalArgumentException e) {
+            recorder.addRecord(
+                StepType.FAILED,
+                snapshot(),
+                new int[] {},
+                Map.of(),
+                "ERROR: " + e.getMessage()
+            );
+        }
         return true;
     }
 
     public boolean get(int index) {
-        int value = list.get(index);
+        try {
+            int value = list.get(index);
 
-        recorder.addRecord(
-            StepType.GET,
-            snapshot(),
-            new int[] {index},
+            recorder.addRecord(
+                StepType.GET,
+                snapshot(),
+                new int[] {index},
+                    Map.of(),
+                "value on the index: " + index + " is: " + value
+            );
+        } catch(IllegalArgumentException e) {
+            recorder.addRecord(
+                StepType.FAILED,
+                snapshot(),
+                new int[] {},
                 Map.of(),
-            "value on the index: " + index + " is: " + value
-        );
+                "ERROR: " + e.getMessage()
+            );
+        }
         return true;
     }
 

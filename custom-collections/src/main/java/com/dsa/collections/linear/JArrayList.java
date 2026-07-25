@@ -434,7 +434,7 @@ public class JArrayList<E> implements JList<E> {
     @SuppressWarnings("unchecked")
     public E get(int index) {        
         if(index >= size || index < 0)
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("can't fetch value from empty array.!");
 
         return (E) array[index];
     }
@@ -452,7 +452,7 @@ public class JArrayList<E> implements JList<E> {
     @Override
     public E set(int index, E element) {
         if(index >= size || index < 0)
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("can't set non-existing element in array.!");
 
         array[index] = element;
         return element;
@@ -493,7 +493,7 @@ public class JArrayList<E> implements JList<E> {
     @SuppressWarnings("unchecked")
     public E remove(int index) {
         if(index >= size || index < 0)
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("can't remove non-existing element from array.!");
 
         /**
          * copy the element to delete in the local reference.
