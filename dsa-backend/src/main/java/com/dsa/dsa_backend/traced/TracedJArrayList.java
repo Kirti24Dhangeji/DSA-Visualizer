@@ -58,28 +58,40 @@ public class TracedJArrayList {
     }
 
     public boolean remove(int index) {
-        list.remove(index);
+        try {
+            list.remove(index);
 
-        recorder.addRecord(
-            StepType.REMOVE,
-            snapshot(),
-            new int[] {index},
+            recorder.addRecord(
+                StepType.REMOVE,
+                snapshot(),
+                new int[] {index},
                 Map.of(),
-            "removing element on the index: " + index
-        );
+                "removing element on the index: " + index
+            );
+        } catch(IllegalArgumentException e) {
+            recorder.addRecord(
+                StepType.FAILED,
+                snapshot(),
+                new int[] {},
+                Map.of(),
+                "ERROR: " + e.getMesssage()
+            );
+        }
         return true;
     }
 
     public boolean set(int index, int element) {
-        list.set(index, element);
+        try {
+            list.set(index, element);
 
-        recorder.addRecord(
-            StepType.SET,
-            snapshot(),
-            new int[] {index},
-                Map.of(),
-            "updating element on the index: " + index
-        );
+            recorder.addRecord(
+                StepType.SET,
+                snapshot(),
+                new int[] {index},
+                    Map.of(),
+                "updating element on the index: " + index
+            );
+        } catch()
         return true;
     }
 

@@ -13,5 +13,8 @@ public enum StepType {
     FOUND, 
     NOT_FOUND,
     SWAP,
-    SORT
+    SORT,
+
+    // failed step (for handle exception)
+    FAILED
 }
