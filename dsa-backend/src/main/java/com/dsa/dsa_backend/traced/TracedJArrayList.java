@@ -37,7 +37,7 @@ public class TracedJArrayList {
             StepType.ADD,
             snapshot(),
             new int[] {list.size()-1},
-                Map.of(),
+            Map.of(),
             "adding element at last index"
         );
 
@@ -51,7 +51,7 @@ public class TracedJArrayList {
             StepType.SHIFT,
             snapshot(),
             new int[] {0},
-                Map.of(),
+            Map.of(),
             "shifting all elements to one index right"
         );
         return true;
@@ -74,7 +74,7 @@ public class TracedJArrayList {
                 snapshot(),
                 new int[] {},
                 Map.of(),
-                "ERROR: " + e.getMessage()
+                "ERROR: Cannot remove element from an empty array.!"
             );
         }
         return true;
@@ -88,7 +88,7 @@ public class TracedJArrayList {
                 StepType.SET,
                 snapshot(),
                 new int[] {index},
-                    Map.of(),
+                Map.of(),
                 "updating element on the index: " + index
             );
         } catch(IllegalArgumentException e) {
@@ -97,7 +97,7 @@ public class TracedJArrayList {
                 snapshot(),
                 new int[] {},
                 Map.of(),
-                "ERROR: " + e.getMessage()
+                "ERROR: Cannot set (update) element in an empty array.!"
             );
         }
         return true;
@@ -111,7 +111,7 @@ public class TracedJArrayList {
                 StepType.GET,
                 snapshot(),
                 new int[] {index},
-                    Map.of(),
+                Map.of(),
                 "value on the index: " + index + " is: " + value
             );
         } catch(IllegalArgumentException e) {
@@ -120,7 +120,7 @@ public class TracedJArrayList {
                 snapshot(),
                 new int[] {},
                 Map.of(),
-                "ERROR: " + e.getMessage()
+                "ERROR: Cannot fetch element from an empty array.!"
             );
         }
         return true;
@@ -134,7 +134,7 @@ public class TracedJArrayList {
                 StepType.COMPARE,
                 snapshot(),
                 new int[] {i},
-                    Map.of(),
+                Map.of(),
                 "comparing element on the index: " + i + " with target: " + target
             );
             if(list.get(i) == target)
@@ -143,7 +143,7 @@ public class TracedJArrayList {
                     StepType.FOUND,
                     snapshot(),
                     new int[] {i},
-                        Map.of(),
+                    Map.of(),
                     "target element: " + target + " found on the index: " + i
                 );
                 return true;
@@ -154,7 +154,7 @@ public class TracedJArrayList {
             StepType.NOT_FOUND,
             snapshot(),
             new int[] {},
-                Map.of(),
+            Map.of(),
             "target element: " + target + " not found in the list"
         );
         
@@ -173,7 +173,7 @@ public class TracedJArrayList {
                 StepType.COMPARE,
                 snapshot(),
                 new int[] {start, mid, end},
-                    Map.of(),
+                Map.of(),
                 "comparing element on the index: " + mid + " with target: " + target
             );
 
@@ -182,7 +182,7 @@ public class TracedJArrayList {
                     StepType.FOUND,
                     snapshot(),
                     new int[] {mid},
-                        Map.of(),
+                    Map.of(),
                     "target element: " + target + " found at index: " + mid
                 );
                 return true;
@@ -198,7 +198,7 @@ public class TracedJArrayList {
             StepType.NOT_FOUND,
             snapshot(),
             new int[] {},
-                Map.of(),
+            Map.of(),
             "target element: " + target + " not found in the list"
         );
         return true;
@@ -206,6 +206,18 @@ public class TracedJArrayList {
 
     /* sorting operations */
     public boolean bubble_sort() {
+        if(list.isEmpty()) {
+            recorder.addRecord(
+                StepType.FAILED,
+                snapshot(),
+                new int[] {},
+                Map.of(),
+                "ERROR: Cannot perform sorting on an empty array.!"
+            );
+
+            return true;
+        }
+
         boolean swap;
         for(int i = 0 ; i<list.size()-1 ; i++)
         {
@@ -216,7 +228,7 @@ public class TracedJArrayList {
                     StepType.COMPARE,
                     snapshot(),
                     new int[] {j, j+1},
-                        Map.of(),
+                    Map.of(),
                     "comparing element on the index: " + j + " with " + (j+1)
                 );
 
@@ -230,7 +242,7 @@ public class TracedJArrayList {
                         StepType.SWAP,
                         snapshot(),
                         new int[] {j, j+1},
-                            Map.of(),
+                        Map.of(),
                         "swapping element on the index: " + j + " with " + (j+1)
                     );
                 }
@@ -244,13 +256,25 @@ public class TracedJArrayList {
             StepType.SORT,
             snapshot(),
             new int[] {},
-                Map.of(),
+            Map.of(),
             "array is now sorted"
         );
         return true;
     }
 
     public boolean insertion_sort() {
+        if(list.isEmpty()) {
+            recorder.addRecord(
+                StepType.FAILED,
+                snapshot(),
+                new int[] {},
+                Map.of(),
+                "ERROR: Cannot perform sorting on an empty array.!"
+            );
+
+            return true;
+        }
+
         for(int i=1; i<list.size(); i++) {
             int j = i-1;
             int backup = list.get(i);
