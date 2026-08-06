@@ -2,6 +2,8 @@ com\dsa\collections\linear\JArrayList$1.class
 com\dsa\collections\interfaces\JSequencedCollection.class
 com\dsa\collections\exceptions\ListEmptyException.class
 com\dsa\collections\interfaces\JIterable.class
+com\dsa\collections\linear\JStack.class
+com\dsa\collections\exceptions\StackEmptyException.class
 com\dsa\collections\interfaces\JList.class
 com\dsa\collections\linear\JArrayList.class
 com\dsa\collections\interfaces\JQueue.class

@@ -9,8 +9,8 @@ import java.util.Arrays;
 import java.util.NoSuchElementException;
 
 public class JArrayList<E> implements JList<E> {
-    private Object array[];
-    private int size;
+    protected Object array[];
+    protected int size;
     private int capacity =5; // if size is not mentioned, create array of 5 elements by default
 
     /* -------------------- Helper methods -------------------- */
@@ -112,6 +112,14 @@ public class JArrayList<E> implements JList<E> {
     }
 
     /**
+     * @return capacity of the array i.e: no of blocks allocated for the array 
+     */
+    @Override
+    public int capacity() {
+        return capacity;
+    }
+
+    /**
      * check if the array is empty
      * 
      * @return true if size is zero i.e: list is empty
@@ -131,7 +139,7 @@ public class JArrayList<E> implements JList<E> {
      */
     @Override
     public boolean contains(Object o) {
-        if(isEmpty())
+        if(this.isEmpty())
             return false;
 
         for(int i=0; i<size; i++) {
@@ -179,7 +187,7 @@ public class JArrayList<E> implements JList<E> {
      */
     @Override
     public boolean remove(Object o) {
-        if(isEmpty())
+        if(this.isEmpty())
             return false;
 
         for(int i=0; i<size; i++) {
@@ -209,7 +217,7 @@ public class JArrayList<E> implements JList<E> {
      */
     @Override
     public boolean containsAll(JCollection<?> c) throws ListEmptyException {
-        if(isEmpty())
+        if(this.isEmpty())
             throw new ListEmptyException("list is empty.!");
 
         if(c.isEmpty())
@@ -334,7 +342,7 @@ public class JArrayList<E> implements JList<E> {
     @SuppressWarnings("unchecked")
     @Override
     public E getFirst() throws ListEmptyException {
-        if(isEmpty())
+        if(this.isEmpty())
             throw new ListEmptyException("list is empty.!");
         return (E) array[0];
     }
@@ -348,7 +356,7 @@ public class JArrayList<E> implements JList<E> {
     @SuppressWarnings("unchecked")
     @Override
     public E getLast() throws ListEmptyException {
-        if(isEmpty())
+        if(this.isEmpty())
             throw new ListEmptyException("list is empty.!");
         return (E) array[size-1];
     }
@@ -361,7 +369,7 @@ public class JArrayList<E> implements JList<E> {
      */
     @Override
     public E removeFirst() throws ListEmptyException {
-        if(isEmpty())
+        if(this.isEmpty())
             throw new ListEmptyException("list is empty.!");
         return this.remove(0);
     }
@@ -374,7 +382,7 @@ public class JArrayList<E> implements JList<E> {
      */
     @Override
     public E removeLast() throws ListEmptyException {
-        if(isEmpty())
+        if(this.isEmpty())
             throw new ListEmptyException("list is empty.!");
         return this.remove(size-1);
     }
@@ -411,7 +419,7 @@ public class JArrayList<E> implements JList<E> {
      */
     @Override
     public void sort() throws ListEmptyException {
-        if(isEmpty())
+        if(this.isEmpty())
             throw new ListEmptyException("list is empty.!");
 
         /**
@@ -515,7 +523,7 @@ public class JArrayList<E> implements JList<E> {
      */
     @Override
     public int indexOf(Object o) throws ListEmptyException {
-        if(isEmpty())
+        if(this.isEmpty())
             throw new ListEmptyException("list is empty.!");
 
         for(int i=0; i<size; i++)
