@@ -25,7 +25,7 @@ public class StepRecorder {
          * Collections.unmodifiableList() changes the property of List to immutable.
          * to keep this.steps unchanged, we passes new ArrayList of same elements.
          */ 
-        return new ExecutionTrace(new ArrayList(steps));
+        return new ExecutionTrace(new ArrayList<Step>(steps));
     }
 
     public void clearRecord() {
