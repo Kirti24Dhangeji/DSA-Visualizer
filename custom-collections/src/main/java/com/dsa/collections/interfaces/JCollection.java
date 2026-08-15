@@ -1,7 +1,7 @@
 package com.dsa.collections.interfaces;
 
 public interface JCollection<E> extends JIterable<E> {
-    int capacity();
+
     int size();
     boolean isEmpty();
     boolean contains(Object o) throws com.dsa.collections.exceptions.ListEmptyException;
@@ -11,4 +11,5 @@ public interface JCollection<E> extends JIterable<E> {
     boolean containsAll(JCollection<?> c) throws com.dsa.collections.exceptions.ListEmptyException;
     boolean addAll(JCollection<E> c);
     void clear();
+    
 }

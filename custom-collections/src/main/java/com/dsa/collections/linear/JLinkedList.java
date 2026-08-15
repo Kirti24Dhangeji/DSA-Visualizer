@@ -60,7 +60,21 @@ public class JLinkedList<E> implements JList<E> {
 
     public JIterator<E> iterator()
     {
-        
+        return new JIterator<E>() {
+            private Node<E> current = first;
+
+            @Override
+            public boolean hasNext() {
+                return current != last.next;
+            }
+
+            @Override
+            public E next() {
+                E currentData = current.data;
+                current = current.next;
+                return currentData;
+            }
+        };
     }
 
     public int size()
@@ -97,7 +111,18 @@ public class JLinkedList<E> implements JList<E> {
 
     }
 
-    public Object[] toArray();
+    public Object[] toArray() {
+        Object []arr = new Object[size];
+
+        Node<E> run = first;
+        int i=0;
+        while(run != last.next) {
+            arr[i] = run.data;
+            i++;
+        }
+
+        return arr;
+    }
 
     public boolean remove(Node<E> n)
     {
@@ -322,7 +347,7 @@ public class JLinkedList<E> implements JList<E> {
 
     public void add(int index, E element)
     {
-        add(index, element);
+
     }
 
 

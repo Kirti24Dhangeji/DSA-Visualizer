@@ -114,7 +114,6 @@ public class JArrayList<E> implements JList<E> {
     /**
      * @return capacity of the array i.e: no of blocks allocated for the array 
      */
-    @Override
     public int capacity() {
         return capacity;
     }
