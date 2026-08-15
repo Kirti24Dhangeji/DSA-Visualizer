@@ -1,4 +1,6 @@
 package com.dsa.collections.linear;
+import java.util.Arrays;
+
 import com.dsa.collections.exceptions.ListEmptyException;
 import com.dsa.collections.interfaces.JCollection;
 import com.dsa.collections.interfaces.JList;
@@ -29,7 +31,7 @@ public class JLinkedList<E> implements JList<E> {
         }
         else
         {
-            final Node<E> l = last ;
+            Node<E> l = last ;
             final Node<E> newNode = new Node<>(l, e, null);
             l = newNode;
             l.next = last ;
@@ -154,11 +156,32 @@ public class JLinkedList<E> implements JList<E> {
     }
 
 
-    public boolean containsAll(JLinkedList<E> temp) throws com.dsa.collections.exceptions.ListEmptyException  //to check wether the list contains all the elements 
+    public boolean containsAll(JCollection<?> c) throws com.dsa.collections.exceptions.ListEmptyException  //to check wether the list contains all the elements 
     {
-           
+        boolean flag = true;     
+        
+        JIterator<E> itr = c.iterator();
+
     }
-    public boolean addAll(JCollection<E> c);
+
+
+    public boolean addAll(JCollection<E> c)
+    {
+
+        if(c== null || c.isEmpty()  )
+        {
+            return false;
+        }
+
+        Object[] arr = c.toArray();
+
+        for(Object i : arr)
+        {
+            this.add((E)i);
+        }
+
+        return true;
+    }
 
 
     public void clear()
@@ -168,7 +191,25 @@ public class JLinkedList<E> implements JList<E> {
         size=0;
     }
 
-    public JSequencedCollection<E> reversed();
+    public JSequencedCollection<E> reversed()
+    {
+        if(size == 0)
+        {
+            return null;
+        }
+
+        Node<E> temp = last;
+
+        JSequencedCollection<E> ref = new JLinkedList<>();
+        
+        while(temp!= first.prev)
+        {
+            ref.add(temp.data);
+            temp= temp.prev;
+        }
+        return ref;
+    }
+
 
 
     public void addFirst(E e)
@@ -268,8 +309,10 @@ public class JLinkedList<E> implements JList<E> {
 
     public JList<E> copyOf(JCollection<? extends E> c)
     {
-
+         
     }
+
+
     public void sort() throws com.dsa.collections.exceptions.ListEmptyException
     {
         if(size == 0 )
@@ -278,7 +321,14 @@ public class JLinkedList<E> implements JList<E> {
         }
         else
         {
-            
+            Object[] arr = toArray();
+            Arrays.sort(arr);
+            clear();
+            for(Object o : arr)
+            {
+                add((E)o);
+            }
+
         }
     }
 
@@ -347,7 +397,27 @@ public class JLinkedList<E> implements JList<E> {
 
     public void add(int index, E element)
     {
+        if(index ==0)
+        {
+            addFirst(element);
+        }
+        int count = 0;
 
+        Node<E> current = first;
+        while(current!=null)
+        {
+            if(count+1 == index)
+            {
+                Node<E> newNode = new Node<>(null, element, null);
+                newNode.prev=current;
+                newNode.next=current.next;
+                current.next=newNode;
+                newNode.next.prev=newNode;
+            }
+            count++;
+            current=current.next;
+        }
+        
     }
 
 
@@ -360,7 +430,7 @@ public class JLinkedList<E> implements JList<E> {
         }
         else if(index < 0)
         {
-            //create new exception 
+            throw new IllegalArgumentException("Index cannot be negative");
         }
         else
         {
