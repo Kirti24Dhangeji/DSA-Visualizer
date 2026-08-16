@@ -1,4 +1,5 @@
 package com.dsa.collections.linear;
+import java.io.IOException;
 import java.util.Arrays;
 
 import com.dsa.collections.exceptions.ListEmptyException;
@@ -14,12 +15,35 @@ public class JLinkedList<E> implements JList<E> {
     private Node<E> first;
     private Node<E> last;
 
+    private static class Node<E>{
+
+        E data;
+        Node<E> next ;
+        Node<E> prev;
+
+        
+        // confusing constructor parameter sequence
+        public Node( Node<E> next ,E data,  Node<E> prev)
+        {
+            this.data= data;
+            this.next = next;
+            this.prev = prev;
+
+        }
+    }
 
     public JLinkedList()
     {
+        first = last = null;
         this.size = 0;
     }
 
+    // refer addAll()
+    public JLinkedList(JCollection<?> c) {
+        
+    }
+
+    // wrong node linking
     public  boolean add(E e)
     {
         if(first == null)
@@ -31,6 +55,7 @@ public class JLinkedList<E> implements JList<E> {
         }
         else
         {
+            // logically incorrect.
             Node<E> l = last ;
             final Node<E> newNode = new Node<>(l, e, null);
             l = newNode;
@@ -39,23 +64,6 @@ public class JLinkedList<E> implements JList<E> {
         size++;
 
         return true;
-    }
-
-    private static class Node<E>{
-
-        E data;
-        Node<E> next ;
-        Node<E> prev;
-
-        
-
-        public Node( Node<E> next ,E data,  Node<E> prev)
-        {
-            this.data= data;
-            this.next = next;
-            this.prev = prev;
-
-        }
     }
 
 
@@ -85,16 +93,18 @@ public class JLinkedList<E> implements JList<E> {
     }
 
 
-
+    // change to ifficient
     public boolean isEmpty()
     {
-        if(size == 0)
-            return true;
-        else
-            return false;
+        // if(size == 0)
+        //     return true;
+        // else
+        //     return false;
+
+        return size==0;
     }
 
-
+    // implement boolean contains(Object o)
     public boolean contains(Node<E> n) throws com.dsa.collections.exceptions.ListEmptyException
     {
         if(size == 0)
@@ -102,7 +112,7 @@ public class JLinkedList<E> implements JList<E> {
         else
         {
             Node<E> current = first;
-            while(current != null)
+            while(current != last.next)
             {
                 if(current.data.equals(n.data))
                     return true;
@@ -126,9 +136,10 @@ public class JLinkedList<E> implements JList<E> {
         return arr;
     }
 
+    // implement boolean remove(Object o)
     public boolean remove(Node<E> n)
     {
-
+        // incorrect usage of flag. (try without flag.)
         boolean flag = true;
         if(size == 0)
             return false;
@@ -136,10 +147,11 @@ public class JLinkedList<E> implements JList<E> {
         {
             Node<E> current = first;
 
-            while(current != null)
+            while(current != last.next)
             {
                 if(current.data.equals(n.data))
                 {
+                    // handle edge cases.
                    current.prev.next = current.next;  //connecting the nodes
                    current.next.prev = current.prev;
                    flag = false;
@@ -158,10 +170,40 @@ public class JLinkedList<E> implements JList<E> {
 
     public boolean containsAll(JCollection<?> c) throws com.dsa.collections.exceptions.ListEmptyException  //to check wether the list contains all the elements 
     {
-        boolean flag = true;     
-        
-        JIterator<E> itr = c.iterator();
+        if(this.isEmpty())
+            throw new ListEmptyException("List is empty.!");
 
+        if(c.isEmpty())
+            throw new IllegalArgumentException();
+
+        Object collection_first_obj = c.iterator().next();
+
+        Node<E> current = first;
+        while (current != last.next) {
+
+            if (current.data.equals(collection_first_obj)) {
+                break;
+            }
+
+            current = current.next;
+        }
+
+        if (current == last.next)
+            return false;
+
+        JIterator<?> itr = c.iterator();
+        while (current != last.next && itr.hasNext()) {
+
+            Object obj = itr.next();
+            
+            if (!current.data.equals(obj)){
+                return false;
+            }
+
+            current = current.next;
+        }
+
+        return true;
     }
 
 
@@ -214,10 +256,11 @@ public class JLinkedList<E> implements JList<E> {
 
     public void addFirst(E e)
     { 
-        
+        // upate size
         Node<E> newNode = new Node<>(null, e, null);
         if(size==0)
         {
+            // handle last reference (pointer)
             first = newNode;
         }
         else{
@@ -230,6 +273,7 @@ public class JLinkedList<E> implements JList<E> {
 
     public void addLast(E e)
     {
+        // upate size
         Node<E> newNode = new Node<>(null, e, null);
         if(size==0)
         {
@@ -278,13 +322,14 @@ public class JLinkedList<E> implements JList<E> {
             throw new com.dsa.collections.exceptions.ListEmptyException("List is empty");
         }
         else{
-
+            // handle prev of 2nd node.
             Node<E> newNode = first;
             first = first.next;
             newNode=null;
 
         }
 
+        // wrong return data
         return first.data;
 
     }
@@ -299,17 +344,26 @@ public class JLinkedList<E> implements JList<E> {
         }
         else
         {
+            // handle prev of 2nd node.
             Node<E> newNode = last;
             last = last.prev;
             newNode=null;
         }
+
+        // wrong return data
         return last.data;
     }
 
 
     public JList<E> copyOf(JCollection<? extends E> c)
     {
-         
+        if (c==null || c.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
+
+        JList<E> list = new JLinkedList<>(c);
+
+        return list;
     }
 
 
@@ -345,14 +399,14 @@ public class JLinkedList<E> implements JList<E> {
             int temp = 0;
             Node<E> newNode = first;
 
-            while(newNode!=null)
+            while(newNode!=last.next)
             {
                 if(index == temp)
                 {
                     return newNode.data;
                 }
                 temp++;
-                newNode= newNode.next;
+                newNode = newNode.next;
             }
 
         }
@@ -361,42 +415,25 @@ public class JLinkedList<E> implements JList<E> {
     }
 
 
+    /**
+     * update the existing data present on the index.
+     * 
+     * check is index present in the list.
+     * if present:
+     *      update the node.data = element
+     *      return updated node.data
+     * else:
+     *      return null / throw IllegalArgumentException()
+     */
     public E set(int index, E element) throws com.dsa.collections.exceptions.ListEmptyException
     {
-        if(size == 0 && index > 0  )
-        {
-            throw new com.dsa.collections.exceptions.ListEmptyException("List is empty");
-        }
-        else if(index == 0)
-        {
-            addFirst(element);    //calling addfirst to add node
-        }
-        else
-        {
-            Node<E> current = first;
-            int temp = -1;
-            while(current!=null)
-            {
-                if(temp+1 == index)
-                {
-                    Node<E> newNode = new Node<>(null, element, null);
-                    newNode.prev=current.prev;
-                    newNode.next=current;
-                    newNode.prev.next=newNode;
-                    current.prev=newNode;
-
-                }
-                temp++;
-                current=current.next;
-            }
-        }
-        return element;
 
     }
 
 
     public void add(int index, E element)
     {
+        // update the size
         if(index ==0)
         {
             addFirst(element);
@@ -404,10 +441,12 @@ public class JLinkedList<E> implements JList<E> {
         int count = 0;
 
         Node<E> current = first;
-        while(current!=null)
+        while(current!=last.next)
         {
+
             if(count+1 == index)
             {
+                // handle edge cases.
                 Node<E> newNode = new Node<>(null, element, null);
                 newNode.prev=current;
                 newNode.next=current.next;
@@ -435,8 +474,12 @@ public class JLinkedList<E> implements JList<E> {
         else
         {
             Node<E> current = first;
-            while(current!=null)
+            while(current!=last.next)
             {
+                // handle infinite loop condition.
+                // handle temp increment.
+                // misssing break statement.
+                // return appropriate value.
                 if(temp == index)
                 {
                     current.prev.next= current.next;
@@ -452,7 +495,7 @@ public class JLinkedList<E> implements JList<E> {
         return null;
     }
 
-
+    // implement int indexOf(Object o)
     public int indexOf(Node<E> e) throws com.dsa.collections.exceptions.ListEmptyException
     {
         if(size == 0)
@@ -463,7 +506,7 @@ public class JLinkedList<E> implements JList<E> {
         {
             Node<E> temp = first;
             int index = 0;
-            while(temp!=null)
+            while(temp!=last.next)
             {
                 if(temp.data.equals(e.data))
                 {
