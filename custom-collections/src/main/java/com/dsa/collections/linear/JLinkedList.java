@@ -146,7 +146,7 @@ public class JLinkedList<E> implements JList<E> {
         return arr;
     }
 
-    // implement boolean remove(Object o)
+    // TODO Edge cases pending.
     public boolean remove(Object o)
     {
         // incorrect usage of flag. (try without flag.)
@@ -230,6 +230,7 @@ public class JLinkedList<E> implements JList<E> {
 
         for(Object i : arr)
         {
+            // TODO discuss in meeting
             this.add((E)i);//doubt
         }
 
@@ -264,7 +265,7 @@ public class JLinkedList<E> implements JList<E> {
     }
 
 
-
+    // TODO code can be reduced
     public void addFirst(E e)
     { 
         // upate size
@@ -284,6 +285,7 @@ public class JLinkedList<E> implements JList<E> {
     }
 
 
+    // TODO code can be reduced
     public void addLast(E e)
     {
         // upate size
@@ -338,12 +340,12 @@ public class JLinkedList<E> implements JList<E> {
             throw new com.dsa.collections.exceptions.ListEmptyException("List is empty");
         }
         else{
-            // handle prev of 2nd node. //done
+            // handle prev of 2nd node. -done
             first = first.next;
             first.prev=null;
         }
 
-        // wrong return data
+        // wrong return data-DONE
         return removing_node.data; 
 
     }
@@ -363,7 +365,7 @@ public class JLinkedList<E> implements JList<E> {
             last.next=null;
         }
 
-        // wrong return data
+        // wrong return data - done
         return removing_node.data;
     }
 
@@ -467,6 +469,7 @@ public class JLinkedList<E> implements JList<E> {
     }
 
 
+    // TODO logic can be more efficient.
     public void add(int index, E element)
     {
         // update the size - DONE
@@ -505,6 +508,7 @@ public class JLinkedList<E> implements JList<E> {
     }
 
 
+    // TODO discuss in meeting
     public E remove(int index) throws com.dsa.collections.exceptions.ListEmptyException  //what to return ??
     {
         int count_for_index = 0;
