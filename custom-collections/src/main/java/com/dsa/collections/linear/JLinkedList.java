@@ -59,7 +59,7 @@ public class JLinkedList<E> implements JList<E> {
         
     }
 
-    // wrong node linking-DONE
+
     public  boolean add(E e)
     {
         if(first == null)
@@ -71,7 +71,6 @@ public class JLinkedList<E> implements JList<E> {
         }
         else
         {
-            // logically incorrect.
             Node<E> newNode = new Node<>(last, e, null);
             last.next = newNode;
             last = newNode;
@@ -141,15 +140,14 @@ public class JLinkedList<E> implements JList<E> {
         while(run != last.next) {
             arr[i] = run.data;
             i++;
+            run=run.next;
         }
 
         return arr;
     }
 
-    // TODO Edge cases pending.
     public boolean remove(Object o)
     {
-        // incorrect usage of flag. (try without flag.)
         if(size == 0)
             return false;
         else
@@ -162,20 +160,29 @@ public class JLinkedList<E> implements JList<E> {
                 {
                     if(current == last)
                     {
+                        last = last.prev;
                         current.prev.next = null;
+                        size--;
                         return true;
                     }
-                    // handle edge cases. - DONE
-                   current.prev.next = current.next;  //connecting the nodes
+                    if(current == first)
+                    {
+                        first = first.next;
+                        current.next.prev = null;
+                        size--;
+                        return true;
+                    }
+                   current.prev.next = current.next;
                    current.next.prev = current.prev;
+                   size--;
                    return true;
-                  
                 }
+                current = current.next;
             }
 
         }
         
-        return true;
+        return false;
     }
 
 
@@ -230,8 +237,7 @@ public class JLinkedList<E> implements JList<E> {
 
         for(Object i : arr)
         {
-            // TODO discuss in meeting
-            this.add((E)i);//doubt
+            this.add((E)i);//TYPECASTING
         }
 
         return true;
@@ -265,42 +271,29 @@ public class JLinkedList<E> implements JList<E> {
     }
 
 
-    // TODO code can be reduced
+
     public void addFirst(E e)
     { 
         // upate size
-        Node<E> newNode = new Node<>(null, e, null);
-        if(size==0)
-        {
-            // handle last reference (pointer) -DONE
-            first = newNode;
-            last = newNode;
-        }
-        else{
-            newNode.next = first;
+        Node<E> newNode = new Node<>(null, e, first);
+        if(first!=null)
             first.prev = newNode;
-            first = newNode;
-        }
+        first = newNode;
+        if(last == null)
+            last = newNode;
         size++;
     }
 
 
-    // TODO code can be reduced
     public void addLast(E e)
     {
         // upate size
-        Node<E> newNode = new Node<>(null, e, null);
-        if(size==0)
-        {
+        Node<E> newNode = new Node<>(last, e, null);
+        if(last!=null)
+            last.next = newNode;
+        last = newNode;
+        if(first == null)
             first = newNode;
-            last = newNode;
-        }
-        else
-        {
-            last.next= newNode;
-            newNode.prev = last;
-            last = newNode;
-        }
         size++;
     }
 
@@ -339,13 +332,15 @@ public class JLinkedList<E> implements JList<E> {
         {
             throw new com.dsa.collections.exceptions.ListEmptyException("List is empty");
         }
+        if(size == 1)
+        {
+            first = null;
+            last = null;
+        }
         else{
-            // handle prev of 2nd node. -done
             first = first.next;
             first.prev=null;
         }
-
-        // wrong return data-DONE
         return removing_node.data; 
 
     }
@@ -358,14 +353,16 @@ public class JLinkedList<E> implements JList<E> {
         {
             throw new com.dsa.collections.exceptions.ListEmptyException("List is empty");
         }
+        if(size == 1)
+        {
+            first = null;
+            last = null;
+        }
         else
         {
-            // handle prev of 2nd node. done
             last = last.prev;
             last.next=null;
         }
-
-        // wrong return data - done
         return removing_node.data;
     }
 
@@ -409,6 +406,10 @@ public class JLinkedList<E> implements JList<E> {
         {
             throw new com.dsa.collections.exceptions.ListEmptyException("List is empty");
         }
+        if(index < 0 || index >= size)
+        {
+           throw new IndexOutOfBoundsException("Invalid index: " + index);
+        }
         else
         {
             int temp = 0;
@@ -430,16 +431,6 @@ public class JLinkedList<E> implements JList<E> {
     }
 
 
-    /**
-     * update the existing data present on the index.
-     * 
-     * check is index present in the list.
-     * if present:
-     *      update the node.data = element
-     *      return updated node.data
-     * else:
-     *      return null / throw IllegalArgumentException() -DONE
-     */
     public E set(int index, E element) throws com.dsa.collections.exceptions.ListEmptyException
     {
         
@@ -469,13 +460,22 @@ public class JLinkedList<E> implements JList<E> {
     }
 
 
-    // TODO logic can be more efficient.
     public void add(int index, E element)
     {
         // update the size - DONE
         if(index == 0 )
         {
             addFirst(element);
+            return;
+        }
+        else if(index == size)
+        {
+            addLast(element);
+            return;
+        }
+        else if(index < 0 || index > size)
+        {
+            throw new IllegalArgumentException("Index is out of bounds");
         }
         int count = 0;
 
@@ -484,21 +484,9 @@ public class JLinkedList<E> implements JList<E> {
         {
             if(count+1 == index)
             {
-            
-                if(current == last)
-                {
-                    addLast(element);
-                    return;
-                }
-                // handle edge cases.
-                Node<E> newNode = new Node<>(null, element, null);
-                newNode.prev=current;
-                newNode.next=current.next;
+                Node<E> newNode = new Node<>(current , element, current.next);
                 current.next=newNode;
                 newNode.next.prev=newNode;
-
-
-                
             }
             count++;
             current=current.next;
@@ -507,9 +495,7 @@ public class JLinkedList<E> implements JList<E> {
         
     }
 
-
-    // TODO discuss in meeting
-    public E remove(int index) throws com.dsa.collections.exceptions.ListEmptyException  //what to return ??
+    public E remove(int index) throws com.dsa.collections.exceptions.ListEmptyException  
     {
         int count_for_index = 0;
         E removed_data = null;
@@ -517,33 +503,36 @@ public class JLinkedList<E> implements JList<E> {
         {
             throw new com.dsa.collections.exceptions.ListEmptyException("List is empty");
         }
-        else if(index < 0)
+        else if(index < 0 || index >= size)
         {
-            throw new IllegalArgumentException("Index cannot be negative");
+            throw new IllegalArgumentException("Index is out of bounds");
         }
         else
         {
+            if(index == 0)
+            {
+                return removeFirst();
+            }
+            else if(index == size-1)
+            {
+                return removeLast();
+            }
             Node<E> current = first;
             while(current!=last.next)
             {
-                // handle infinite loop condition.
-                // handle temp increment.
-                // misssing break statement.
-                // return appropriate value.  - DONE
                 if(count_for_index == index)
                 {
                     removed_data = current.data;
                     current.prev.next= current.next;
                     current.next.prev=current.prev;
-                    break;
+                    size--;
+                    return removed_data;
                 }
                 current=current.next;
                 count_for_index++;
             }
-
-
         }
-        return removed_data;
+        return null;
     }
 
     // implement int indexOf(Object o) - DONE
