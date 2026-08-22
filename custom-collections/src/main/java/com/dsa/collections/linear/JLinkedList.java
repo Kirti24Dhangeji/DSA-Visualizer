@@ -341,6 +341,7 @@ public class JLinkedList<E> implements JList<E> {
             first = first.next;
             first.prev=null;
         }
+        size--;
         return removing_node.data; 
 
     }
@@ -363,6 +364,7 @@ public class JLinkedList<E> implements JList<E> {
             last = last.prev;
             last.next=null;
         }
+        size--;
         return removing_node.data;
     }
 
