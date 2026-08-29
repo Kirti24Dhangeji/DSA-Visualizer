@@ -1,8 +1,7 @@
 package com.dsa.collections.linear;
-import com.dsa.collections.linear.JLinkedList;
+import com.dsa.collections.interfaces.JSequencedCollection;
 
 public class JQueue<E> extends JLinkedList<E> {
-
     private JLinkedList<E> que;
 
     //Constructors
@@ -12,7 +11,6 @@ public class JQueue<E> extends JLinkedList<E> {
     }
 
     //is empty function
-
     public boolean isQueueEmpty()
     {
         return que.isEmpty();
@@ -31,9 +29,9 @@ public class JQueue<E> extends JLinkedList<E> {
     }
 
     //remove last node following FIFO
-    public void dequeue()
+    public E dequeue()
     {
-        que.removeFirst();
+        return que.removeFirst();
     }
 
     //conversion of linklist into array
@@ -43,10 +41,20 @@ public class JQueue<E> extends JLinkedList<E> {
     }
 
     //reverse of queue
-    public void reverseQue()
+    public JSequencedCollection<E> reverseQue()
     {
-        que.reversed(); 
+        return que.reversed(); 
     }
 
-    
+    // get Front element
+    public E getFirstNode()
+    {
+        return que.getFirst();
+    }
+
+    // get last element
+    public E getLastNode()
+    {
+        return que.getLast();
+    }    
 }

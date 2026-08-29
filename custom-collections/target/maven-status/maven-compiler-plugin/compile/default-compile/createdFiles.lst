@@ -1,5 +1,6 @@
 com\dsa\collections\interfaces\JSequencedCollection.class
 com\dsa\collections\exceptions\ListEmptyException.class
+com\dsa\collections\linear\JQueue.class
 com\dsa\collections\linear\JStack.class
 com\dsa\collections\linear\JLinkedList$1.class
 com\dsa\collections\linear\JArrayList.class
