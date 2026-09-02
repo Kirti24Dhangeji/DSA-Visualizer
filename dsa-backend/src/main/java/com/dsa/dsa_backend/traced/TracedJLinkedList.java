@@ -2,7 +2,6 @@ package com.dsa.dsa_backend.traced;
 
 import java.util.*;
 
-import com.dsa.collections.linear.JArrayList;
 import com.dsa.collections.linear.JLinkedList;
 import com.dsa.dsa_backend.engine.StepRecorder;
 import com.dsa.dsa_backend.engine.StepType;
@@ -242,7 +241,7 @@ public class TracedJLinkedList {
         int start = 0;
         int end = list.size()-1;
 
-        for(; start<end; start++, end--)
+        while(start < end)
         {
             int temp = list.get(start);
             list.set(start, list.get(end));
@@ -255,6 +254,8 @@ public class TracedJLinkedList {
                 Map.of(),
                 "Swapping of node data done"
             );
+            start++;
+            end--;
 
         }
         return true;
@@ -276,14 +277,29 @@ public class TracedJLinkedList {
             return true;
         }
 
-        int middle = list.size()/2;
+        int slow = 0;
+        int fast = 0;
+
+        while(fast <list.size() && fast+1 <list.size() ) 
+        {
+            slow++;
+            fast+=2;
+
+            recorder.addRecord(
+                StepType.COMPARE,
+                snapshot(),
+                new int[] {slow, fast},
+                Map.of(),
+                "Finding middle node using slow and fast pointer technique"
+            );
+        }
 
         recorder.addRecord(
             StepType.MIDDLE,
             snapshot(),
-            new int[] {middle},
+            new int[] {slow},
             Map.of(),
-            "Middle node found at index: " + middle
+            "Middle node found at index: " + slow
         );
 
         return true;
