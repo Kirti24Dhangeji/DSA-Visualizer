@@ -44,7 +44,7 @@ public class TracedJLinkedList {
         return true;
     }
 
-        public boolean addFirst(int element) {
+    public boolean addFirst(int element) {
         list.addFirst(element);
 
         recorder.addRecord(
@@ -250,7 +250,7 @@ public class TracedJLinkedList {
             recorder.addRecord(
                 StepType.SWAP,
                 snapshot(),
-                new int[] {},
+                new int[] {start, end},
                 Map.of(),
                 "Swapping of node data done"
             );

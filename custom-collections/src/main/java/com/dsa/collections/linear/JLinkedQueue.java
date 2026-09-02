@@ -1,11 +1,11 @@
 package com.dsa.collections.linear;
 import com.dsa.collections.interfaces.JSequencedCollection;
 
-public class JQueue<E> extends JLinkedList<E> {
+public class JLinkedQueue<E> extends JLinkedList<E> {
     private JLinkedList<E> que;
 
     //Constructors
-    public JQueue()
+    public JLinkedQueue()
     {
         que = new JLinkedList<>();
     }

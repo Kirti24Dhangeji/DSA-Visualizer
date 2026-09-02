@@ -46,8 +46,8 @@ public class JQueueTest {
         System.out.println("========================================\n");
     }
 
-    static JQueue<Integer> queueOf(int... values) {
-        JQueue<Integer> q = new JQueue<>();
+    static JLinkedQueue<Integer> queueOf(int... values) {
+        JLinkedQueue<Integer> q = new JLinkedQueue<>();
         for (int v : values) q.enqueue(v);
         return q;
     }
@@ -55,7 +55,7 @@ public class JQueueTest {
     static void testConstructor() {
         System.out.println("\n--- Constructor ---");
 
-        JQueue<Integer> q = new JQueue<>();
+        JLinkedQueue<Integer> q = new JLinkedQueue<>();
         check("constructor: isQueueEmpty() true on new queue", q.isQueueEmpty());
         check("constructor: sizeOfQueue() == 0",               q.sizeOfQueue() == 0);
     }
@@ -63,7 +63,7 @@ public class JQueueTest {
     static void testEnqueue() throws Exception {
         System.out.println("\n--- enqueue(E) ---");
 
-        JQueue<Integer> q = new JQueue<>();
+        JLinkedQueue<Integer> q = new JLinkedQueue<>();
 
         q.enqueue(10);
         check("enqueue: size becomes 1 after first enqueue", q.sizeOfQueue() == 1);
@@ -81,7 +81,7 @@ public class JQueueTest {
     static void testDequeue() throws Exception {
         System.out.println("\n--- dequeue() ---");
 
-        JQueue<Integer> q = queueOf(10, 20, 30);
+        JLinkedQueue<Integer> q = queueOf(10, 20, 30);
 
         Integer d1 = q.dequeue();
         check("dequeue: first dequeue returns 10 (FIFO)",  d1.equals(10));
@@ -108,7 +108,7 @@ public class JQueueTest {
     static void testFIFOOrder() throws Exception {
         System.out.println("\n--- FIFO Order ---");
 
-        JQueue<Integer> q = queueOf(1, 2, 3, 4, 5);
+        JLinkedQueue<Integer> q = queueOf(1, 2, 3, 4, 5);
 
         for (int expected = 1; expected <= 5; expected++) {
             Integer actual = q.dequeue();
@@ -120,7 +120,7 @@ public class JQueueTest {
     static void testIsEmptyAndSize() throws Exception {
         System.out.println("\n--- isQueueEmpty() / sizeOfQueue() ---");
 
-        JQueue<Integer> q = new JQueue<>();
+        JLinkedQueue<Integer> q = new JLinkedQueue<>();
         check("isEmpty: true on fresh queue",    q.isQueueEmpty());
         check("size:    0 on fresh queue",       q.sizeOfQueue() == 0);
 
@@ -136,7 +136,7 @@ public class JQueueTest {
     static void testGetFirstAndLast() throws Exception {
         System.out.println("\n--- getFirstNode() / getLastNode() ---");
 
-        JQueue<Integer> q = queueOf(100, 200, 300);
+        JLinkedQueue<Integer> q = queueOf(100, 200, 300);
 
         check("getFirstNode: returns 100",       q.getFirstNode().equals(100));
         check("getLastNode:  returns 300",        q.getLastNode().equals(300));
@@ -145,23 +145,23 @@ public class JQueueTest {
         check("getFirstNode: size unchanged (3)", q.sizeOfQueue() == 3);
 
         // single element — both front and rear point to same node
-        JQueue<Integer> single = queueOf(42);
+        JLinkedQueue<Integer> single = queueOf(42);
         check("getFirstNode: single element is 42", single.getFirstNode().equals(42));
         check("getLastNode:  single element is 42", single.getLastNode().equals(42));
 
         // empty queue must throw
         checkThrows("getFirstNode: empty queue -> ListEmptyException",
                 ListEmptyException.class,
-                () -> new JQueue<Integer>().getFirstNode());
+                () -> new JLinkedQueue<Integer>().getFirstNode());
         checkThrows("getLastNode: empty queue -> ListEmptyException",
                 ListEmptyException.class,
-                () -> new JQueue<Integer>().getLastNode());
+                () -> new JLinkedQueue<Integer>().getLastNode());
     }
 
     static void testQueueIntoArray() throws Exception {
         System.out.println("\n--- queueIntoArray() ---");
 
-        JQueue<Integer> q = queueOf(10, 20, 30);
+        JLinkedQueue<Integer> q = queueOf(10, 20, 30);
         Object[] arr = q.queueIntoArray();
 
         check("queueIntoArray: length matches size",  arr.length == q.sizeOfQueue());
@@ -177,7 +177,7 @@ public class JQueueTest {
     static void testReverseQue() throws Exception {
         System.out.println("\n--- reverseQue() ---");
 
-        JQueue<Integer> q = queueOf(1, 2, 3, 4, 5);
+        JLinkedQueue<Integer> q = queueOf(1, 2, 3, 4, 5);
 
         var rev = (JLinkedList<Integer>) q.reverseQue();
 
@@ -192,13 +192,13 @@ public class JQueueTest {
 
         // empty queue
         check("reverseQue: empty queue returns null",
-                new JQueue<Integer>().reverseQue() == null);
+                new JLinkedQueue<Integer>().reverseQue() == null);
     }
 
     static void testInterleavedOperations() throws Exception {
         System.out.println("\n--- Interleaved enqueue / dequeue ---");
 
-        JQueue<Integer> q = new JQueue<>();
+        JLinkedQueue<Integer> q = new JLinkedQueue<>();
 
         q.enqueue(1);
         q.enqueue(2);
