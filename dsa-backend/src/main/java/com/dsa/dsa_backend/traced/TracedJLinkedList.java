@@ -33,14 +33,13 @@ public class TracedJLinkedList {
 
     public boolean add(int element) {
 
-        list.add(element); // actually adding element in JArrayList
-
+        list.add(element); 
         recorder.addRecord(
             StepType.ADD,
             snapshot(),
             new int[] {list.size()-1},
             Map.of(),
-            "adding element at last index"
+            "adding element: " + element + " at the end of the list"
         );
 
         return true;
@@ -54,7 +53,7 @@ public class TracedJLinkedList {
             snapshot(),
             new int[] {0},
             Map.of(),
-            "shifting all elements to one index right"
+            "adding element: " + element + " at the beginning of the list"
         );
         return true;
     }
@@ -68,7 +67,7 @@ public class TracedJLinkedList {
                 snapshot(),
                 new int[] {index},
                 Map.of(),
-                "removing element on the index: " + index
+                "removing node on the index of the list : " + index
             );
         } catch(IllegalArgumentException e) {
             recorder.addRecord(
@@ -76,7 +75,7 @@ public class TracedJLinkedList {
                 snapshot(),
                 new int[] {},
                 Map.of(),
-                "ERROR: Cannot remove element from an empty array.!"
+                "ERROR: Cannot remove element from an empty List.!"
             );
         }
         return true;
@@ -91,7 +90,7 @@ public class TracedJLinkedList {
                 snapshot(),
                 new int[] {index},
                 Map.of(),
-                "updating element on the index: " + index
+                "updating element on the node : " + index
             );
         } catch(IllegalArgumentException e) {
             recorder.addRecord(
@@ -99,7 +98,7 @@ public class TracedJLinkedList {
                 snapshot(),
                 new int[] {},
                 Map.of(),
-                "ERROR: Cannot set (update) element in an empty array.!"
+                "ERROR: Cannot set (update) element in an empty List.!"
             );
         }
         return true;
@@ -114,7 +113,7 @@ public class TracedJLinkedList {
                 snapshot(),
                 new int[] {index},
                 Map.of(),
-                "value on the index: " + index + " is: " + value
+                "value on the node : " + index + " is: " + value
             );
         } catch(IllegalArgumentException e) {
             recorder.addRecord(
@@ -122,13 +121,13 @@ public class TracedJLinkedList {
                 snapshot(),
                 new int[] {},
                 Map.of(),
-                "ERROR: Cannot fetch element from an empty array.!"
+                "ERROR: Cannot fetch element from an empty List.!"
             );
         }
         return true;
     }
 
-    //Linear seearch only..as binary search is not efficient on linked list
+    //Linear search only..as binary search is not efficient on linked list
 
     public boolean linear_search(int target) {
         for(int i = 0 ; i<list.size() ; i++)
@@ -138,7 +137,7 @@ public class TracedJLinkedList {
                 snapshot(),
                 new int[] {i},
                 Map.of(),
-                "comparing element on the index: " + i + " with target: " + target
+                "comparing element on the node : " + i + " with target: " + target
             );
             if(list.get(i) == target)
             {
@@ -147,7 +146,7 @@ public class TracedJLinkedList {
                     snapshot(),
                     new int[] {i},
                     Map.of(),
-                    "target element: " + target + " found on the index: " + i
+                    "target element: " + target + " found on the node : " + i
                 );
                 return true;
             }
@@ -163,8 +162,133 @@ public class TracedJLinkedList {
         
         return true;
     }
+    
 
     //SORTING OPERATIONS
-    //need to figure which sorting algorithm is best suited for linked list AND implement it here
+
+    public boolean insertion_sort() {
+        if(list.isEmpty()) {
+            recorder.addRecord(
+                StepType.FAILED,
+                snapshot(),
+                new int[] {},
+                Map.of(),
+                "ERROR: Cannot perform sorting on an empty list.!"
+            );
+
+            return true;
+        }
+
+        for(int i=1; i<list.size(); i++) {
+            int j = i-1;
+            int backup = list.get(i);
+
+            recorder.addRecord(
+                    StepType.COMPARE,
+                    snapshot(),
+                    new int[] {i, j},
+                    Map.of("backup", backup),
+                    "comparing backup with left list"
+            );
+
+            while(j >= 0 && list.get(j) > backup) {
+                list.set(j+1, list.get(j));
+                recorder.addRecord(
+                        StepType.SHIFT,
+                        snapshot(),
+                        new int[] {j, j+1},
+                        Map.of("backup", backup),
+                        "shifting each element on node : " + j + " to " + j+1
+                );
+
+                j--;
+            }
+
+            list.set(j+1, backup);
+            recorder.addRecord(
+                    StepType.SET,
+                    snapshot(),
+                    new int[] {j+1},
+                    Map.of("backup", backup),
+                    "setting " + backup + " on node : " + j+1
+            );
+        }
+
+        recorder.addRecord(
+                StepType.SORT,
+                snapshot(),
+                new int[] {},
+                Map.of(),
+                "list is now sorted"
+        );
+        return true;
+    }
+
+    //REVERSE OPERATION
+
+    public boolean reverse()
+    {
+        if(list.isEmpty()) {
+            recorder.addRecord(
+                StepType.FAILED,
+                snapshot(),
+                new int[] {},
+                Map.of(),
+                "ERROR: Cannot perform reverse on an empty list.!"
+            );
+            return true;
+        }
+
+        int start = 0;
+        int end = list.size()-1;
+
+        for(; start<end; start++, end--)
+        {
+            int temp = list.get(start);
+            list.set(start, list.get(end));
+            list.set(end , temp);
+
+            recorder.addRecord(
+                StepType.SWAP,
+                snapshot(),
+                new int[] {},
+                Map.of(),
+                "Swapping of node data done"
+            );
+
+        }
+        return true;
+
+    }
+
+    //MIDDLE NODE for linked list
+
+    public boolean middleNode()
+    {
+        if(list.isEmpty()) {
+            recorder.addRecord(
+                StepType.FAILED,
+                snapshot(),
+                new int[] {},
+                Map.of(),
+                "ERROR: No middle node as list is empty!"
+            );
+            return true;
+        }
+
+        int middle = list.size()/2;
+
+        recorder.addRecord(
+            StepType.MIDDLE,
+            snapshot(),
+            new int[] {middle},
+            Map.of(),
+            "Middle node found at index: " + middle
+        );
+
+        return true;
+    }
+
+  
     
 }

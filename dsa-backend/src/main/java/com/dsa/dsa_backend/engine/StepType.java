@@ -16,5 +16,8 @@ public enum StepType {
     SORT,
 
     // failed step (for handle exception)
-    FAILED
+    FAILED,
+
+    //Middle element
+    MIDDLE
 }
