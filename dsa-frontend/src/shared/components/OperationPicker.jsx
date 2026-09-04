@@ -1,9 +1,14 @@
 import { useState } from 'react'
 import { AnimatePresence } from 'framer-motion'
-import { arrayOperations } from '../config/operationsConfig.js'
 import ArgumentForm from './ArgumentForm.jsx'
 
-export default function OperationPicker({ onQueueOperation }) {
+/**
+ * Generic operation button grid + inline argument form.
+ * `operations` is a module-specific config array of
+ * { name, label, args: [{ key, label }] } — see each module's
+ * config/operationsConfig.js for the exact list it supports.
+ */
+export default function OperationPicker({ operations, onQueueOperation }) {
   const [selected, setSelected] = useState(null)
 
   function handleSubmit(args) {
@@ -17,7 +22,7 @@ export default function OperationPicker({ onQueueOperation }) {
         Supported operations
       </p>
       <div className="flex flex-wrap gap-2">
-        {arrayOperations.map((op) => (
+        {operations.map((op) => (
           <button
             key={op.name}
             onClick={() => setSelected(op)}

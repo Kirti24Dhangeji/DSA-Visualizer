@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import Button from '../../../shared/components/Button.jsx'
+import Button from './Button.jsx'
 
 export default function ArgumentForm({ operation, onSubmit, onCancel }) {
   const [values, setValues] = useState(() => operation.args.map(() => ''))

@@ -1,9 +1,7 @@
 import { AnimatePresence } from 'framer-motion'
-import ArrayBox from './ArrayBox.jsx'
-import { getStepStyle, isHighlighted } from '../animations/arrayStepVariants.js'
+import StackBox from './StackBox.jsx'
+import { getStepStyle, isHighlighted } from '../animations/stackStepVariants.js'
 
-// Static class lookup — Tailwind's JIT can't see dynamically interpolated
-// class names like `text-${var}`, so badge colors must be listed literally.
 const BADGE_TEXT_CLASSES = {
   'cell-success': 'text-cell-success',
   'cell-danger': 'text-cell-danger',
@@ -16,31 +14,40 @@ export default function OutputWindow({ step }) {
   const snapshot = step?.snapshot ?? []
   const style = step ? getStepStyle(step.stepType) : null
 
+  // Last element in the snapshot is the top of the stack. Reverse for
+  // display so the top renders visually at the top and the stack grows
+  // upward as elements are pushed, matching a real call-stack diagram.
+  const displayOrder = [...snapshot].map((value, i) => ({ value, index: i })).reverse()
+
   return (
     <div className="relative overflow-hidden rounded-xl border border-graphite-600 bg-graphite-800/40">
       <div className="absolute inset-0 bg-grid-paper pointer-events-none" />
 
-      {/* Boxes */}
-      <div className="relative flex min-h-[300px] flex-wrap items-center gap-5 p-10">
-        {snapshot.length === 0 && (
+      <div className="relative flex min-h-[300px] flex-col items-center justify-end gap-2 p-10">
+        {snapshot.length === 0 ? (
           <p className="font-mono text-sm text-mist-400">
             empty — queue an operation and hit Execute to begin
           </p>
+        ) : (
+          <>
+            <AnimatePresence mode="popLayout">
+              {displayOrder.map(({ value, index }, displayIndex) => (
+                <StackBox
+                  key={index}
+                  index={index}
+                  value={value}
+                  isTop={displayIndex === 0}
+                  active={step ? isHighlighted(index, step.highlightedIndices) : false}
+                  colorToken={style?.color}
+                />
+              ))}
+            </AnimatePresence>
+            {/* floor line — grounds the stack visually */}
+            <div className="mt-1 h-1 w-52 rounded-full bg-graphite-600" />
+          </>
         )}
-        <AnimatePresence mode="popLayout">
-          {snapshot.map((value, index) => (
-            <ArrayBox
-              key={index}
-              index={index}
-              value={value}
-              active={step ? isHighlighted(index, step.highlightedIndices) : false}
-              colorToken={style?.color}
-            />
-          ))}
-        </AnimatePresence>
       </div>
 
-      {/* Console strip: step badge + description, terminal style */}
       <div className="relative flex items-center gap-3 border-t border-graphite-600 bg-graphite-900/70 px-4 py-2.5">
         <span className="inline-block h-2 w-2 flex-shrink-0 animate-pulse rounded-full bg-cell-success" />
         {step ? (
@@ -52,20 +59,6 @@ export default function OutputWindow({ step }) {
               {getStepStyle(step.stepType).badge}
             </span>
             <span className="truncate font-mono text-xs text-mist-300">{step.description}</span>
-            {step.helpers && Object.keys(step.helpers).length > 0 && (
-              <span className="ml-auto flex flex-shrink-0 gap-2">
-                {Object.entries(step.helpers).map(([key, value]) => (
-                  <span
-                    key={key}
-                    className="rounded border border-graphite-500 bg-graphite-800 px-1.5 py-0.5
-                      font-mono text-[11px] text-mist-300"
-                    title={`${key} register`}
-                  >
-                    {key}: <span className="text-cell-swap">{value}</span>
-                  </span>
-                ))}
-              </span>
-            )}
           </>
         ) : (
           <span className="font-mono text-xs text-mist-400">awaiting execution…</span>

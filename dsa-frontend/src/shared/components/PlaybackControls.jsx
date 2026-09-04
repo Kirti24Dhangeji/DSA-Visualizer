@@ -37,7 +37,7 @@ export default function PlaybackControls({
             disabled={disabled || currentStep >= totalSteps - 1}
             aria-label="Next step"
           >
-            ▶|
+            ▶
           </Button>
         </div>
 

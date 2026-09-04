@@ -1,15 +1,27 @@
 import { useState } from 'react'
 import Home from './pages/Home.jsx'
 import ArrayListWorkspace from './modules/arraylist/ArrayListWorkspace.jsx'
+import LinkedListWorkspace from './modules/linkedlist/LinkedListWorkspace.jsx'
+import StackWorkspace from './modules/stack/StackWorkspace.jsx'
+import QueueWorkspace from './modules/queue/QueueWorkspace.jsx'
 
-// No React Router yet — only one module (arraylist) is wired up. Add
-// routing once linkedlist/stack/tree modules come online.
+// No React Router yet — routes between Home and a structure's workspace via
+// simple state. Add real routing once every module (tree, graph) is ready.
 export default function App() {
   const [activeModule, setActiveModule] = useState(null) // null = Home
 
-  if (activeModule === 'arraylist') {
-    return <ArrayListWorkspace onBack={() => setActiveModule(null)} />
-  }
+  const back = () => setActiveModule(null)
 
-  return <Home onSelect={setActiveModule} />
+  switch (activeModule) {
+    case 'arraylist':
+      return <ArrayListWorkspace onBack={back} />
+    case 'linkedlist':
+      return <LinkedListWorkspace onBack={back} />
+    case 'stack':
+      return <StackWorkspace onBack={back} />
+    case 'queue':
+      return <QueueWorkspace onBack={back} />
+    default:
+      return <Home onSelect={setActiveModule} />
+  }
 }

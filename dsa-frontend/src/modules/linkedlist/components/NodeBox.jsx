@@ -8,37 +8,23 @@ const COLOR_CLASSES = {
   'cell-swap': { border: 'border-cell-swap', text: 'text-cell-swap', glow: 'shadow-[0_0_16px_-2px_#A78BFA]' },
 }
 
-/**
- * One box in the output window. `index` is the box's position in the
- * *current* snapshot — used as the layout key so Framer Motion can animate
- * shifts/swaps automatically via the `layout` prop, and mount/unmount
- * transitions for ADD/REMOVE via the parent's AnimatePresence.
- */
-export default function ArrayBox({ value, index, active, colorToken }) {
-  const colors = active
-    ? COLOR_CLASSES[colorToken] ?? COLOR_CLASSES['cell-shift']
-    : null
+export default function NodeBox({ value, index, active, colorToken }) {
+  const colors = active ? COLOR_CLASSES[colorToken] ?? COLOR_CLASSES['cell-shift'] : null
 
   return (
     <motion.div
       layout
-      layoutId={`cell-${index}`}
+      layoutId={`node-${index}`}
       initial={{ opacity: 0, scale: 0.6 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.6 }}
       transition={{ type: 'spring', stiffness: 500, damping: 32 }}
       className="flex flex-col items-center gap-1.5"
     >
-      {/* memory-address style index label */}
-      <span className="font-mono text-[11px] text-mist-400 tabular-nums">
-        0x{String(index).padStart(2, '0')}
-      </span>
+      <span className="font-mono text-[11px] text-mist-400 tabular-nums">node {index}</span>
 
       <motion.div
-        animate={{
-          borderColor: active ? undefined : '#26303F',
-          scale: active ? 1.08 : 1,
-        }}
+        animate={{ scale: active ? 1.08 : 1 }}
         transition={{ duration: 0.25 }}
         className={`flex h-16 w-16 items-center justify-center rounded-md border-2
           bg-graphite-800 font-mono text-xl font-semibold tabular-nums
