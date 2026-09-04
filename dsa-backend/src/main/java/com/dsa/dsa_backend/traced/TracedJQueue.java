@@ -1,9 +1,11 @@
 package com.dsa.dsa_backend.traced;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
-import com.dsa.collections.linear.JLinkedQueue;
 import com.dsa.collections.exceptions.ListEmptyException;
+import com.dsa.collections.linear.JLinkedQueue;
 import com.dsa.dsa_backend.engine.StepRecorder;
 import com.dsa.dsa_backend.engine.StepType;
 
@@ -15,7 +17,7 @@ public class TracedJQueue {
     private List<Integer> snapshot() {
         List<Integer> updated_list = new ArrayList<>();
 
-        for(int i=0; i<queue.sizeOfQueue(); i++)
+        for(int i=0; i<queue.size(); i++)
             updated_list.add(queue.get(i));
 
         return updated_list;
@@ -34,7 +36,7 @@ public class TracedJQueue {
         recorder.addRecord(
             StepType.ADD,
             snapshot(),
-            new int[] {queue.sizeOfQueue()-1},
+            new int[] {queue.size()-1},
             Map.of(),
             "Enqueue element in queue (FIRST IN)"
         );
@@ -70,7 +72,7 @@ public class TracedJQueue {
         Integer element = null;
 
         try {
-            element = queue.getFirstNode();
+            element = queue.peek();
 
             recorder.addRecord(
                 StepType.GET,

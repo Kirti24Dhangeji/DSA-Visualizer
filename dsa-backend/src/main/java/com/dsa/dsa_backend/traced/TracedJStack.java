@@ -75,7 +75,7 @@ public class TracedJStack {
                 Map.of(),
                 "Element at top: " + top_element
             );
-        } catch(IllegalArgumentException e) {
+        } catch(StackEmptyException e) {
             recorder.addRecord(
                 StepType.FAILED,
                 snapshot(),

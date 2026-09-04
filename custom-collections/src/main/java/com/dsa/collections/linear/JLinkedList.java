@@ -1,8 +1,6 @@
 package com.dsa.collections.linear;
-import java.io.IOException;
-import java.util.Arrays;
 
-import org.w3c.dom.Node;
+import java.util.Arrays;
 
 import com.dsa.collections.exceptions.ListEmptyException;
 import com.dsa.collections.interfaces.JCollection;
@@ -59,7 +57,7 @@ public class JLinkedList<E> implements JList<E> {
         
     }
 
-
+    @Override
     public  boolean add(E e)
     {
         if(first == null)
@@ -81,7 +79,7 @@ public class JLinkedList<E> implements JList<E> {
     }
 
 
-
+    @Override
     public JIterator<E> iterator()
     {
         return new JIterator<E>() {
@@ -101,6 +99,7 @@ public class JLinkedList<E> implements JList<E> {
         };
     }
 
+    @Override
     public int size()
     {
         return size;
@@ -108,12 +107,14 @@ public class JLinkedList<E> implements JList<E> {
 
 
     // change to ifficient - DONE
+    @Override
     public boolean isEmpty()
     {
         return size==0;
     }
 
     // implement boolean contains(Object o) - done
+    @Override
     public boolean contains(Object o) throws com.dsa.collections.exceptions.ListEmptyException
     {
         if(size == 0)
@@ -132,6 +133,7 @@ public class JLinkedList<E> implements JList<E> {
 
     }
 
+    @Override
     public Object[] toArray() {
         Object []arr = new Object[size];
 
@@ -146,6 +148,7 @@ public class JLinkedList<E> implements JList<E> {
         return arr;
     }
 
+    @Override
     public boolean remove(Object o)
     {
         if(size == 0)
@@ -186,6 +189,7 @@ public class JLinkedList<E> implements JList<E> {
     }
 
 
+    @Override
     public boolean containsAll(JCollection<?> c) throws com.dsa.collections.exceptions.ListEmptyException  //to check wether the list contains all the elements 
     {
         if(this.isEmpty())
@@ -225,6 +229,7 @@ public class JLinkedList<E> implements JList<E> {
     }
 
 
+    @Override
     public boolean addAll(JCollection<E> c)
     {
 
@@ -244,6 +249,7 @@ public class JLinkedList<E> implements JList<E> {
     }
 
 
+    @Override
     public void clear()
     {
         first=null;
@@ -251,6 +257,7 @@ public class JLinkedList<E> implements JList<E> {
         size=0;
     }
 
+    @Override
     public JSequencedCollection<E> reversed()
     {
         if(size == 0)
@@ -272,6 +279,7 @@ public class JLinkedList<E> implements JList<E> {
 
 
 
+    @Override
     public void addFirst(E e)
     { 
         // upate size
@@ -285,6 +293,7 @@ public class JLinkedList<E> implements JList<E> {
     }
 
 
+    @Override
     public void addLast(E e)
     {
         // upate size
@@ -298,6 +307,7 @@ public class JLinkedList<E> implements JList<E> {
     }
 
 
+    @Override
     public E getFirst() throws com.dsa.collections.exceptions.ListEmptyException
     {
         if(size == 0 )
@@ -311,6 +321,7 @@ public class JLinkedList<E> implements JList<E> {
     }
 
 
+    @Override
     public E getLast() throws com.dsa.collections.exceptions.ListEmptyException
     {
         if(size == 0 )
@@ -324,6 +335,7 @@ public class JLinkedList<E> implements JList<E> {
     }
 
 
+    @Override
     public E removeFirst() throws com.dsa.collections.exceptions.ListEmptyException
     {
 
@@ -347,6 +359,7 @@ public class JLinkedList<E> implements JList<E> {
     }
 
 
+    @Override
     public E removeLast() throws com.dsa.collections.exceptions.ListEmptyException
     {
         Node<E> removing_node = last;
@@ -369,6 +382,7 @@ public class JLinkedList<E> implements JList<E> {
     }
 
 
+    @Override
     public JList<E> copyOf(JCollection<? extends E> c)
     {
         if (c==null || c.isEmpty()) {
@@ -381,6 +395,7 @@ public class JLinkedList<E> implements JList<E> {
     }
 
 
+    @Override
     public void sort() throws com.dsa.collections.exceptions.ListEmptyException
     {
         if(size == 0 )
@@ -401,6 +416,7 @@ public class JLinkedList<E> implements JList<E> {
     }
 
 
+    @Override
     public E get(int index) throws com.dsa.collections.exceptions.ListEmptyException
     {
         
@@ -433,6 +449,7 @@ public class JLinkedList<E> implements JList<E> {
     }
 
 
+    @Override
     public E set(int index, E element) throws com.dsa.collections.exceptions.ListEmptyException
     {
         
@@ -462,6 +479,7 @@ public class JLinkedList<E> implements JList<E> {
     }
 
 
+    @Override
     public void add(int index, E element)
     {
         // update the size - DONE
@@ -497,6 +515,7 @@ public class JLinkedList<E> implements JList<E> {
         
     }
 
+    @Override
     public E remove(int index) throws com.dsa.collections.exceptions.ListEmptyException  
     {
         int count_for_index = 0;
@@ -538,6 +557,7 @@ public class JLinkedList<E> implements JList<E> {
     }
 
     // implement int indexOf(Object o) - DONE
+    @Override
     public int indexOf(Object o) throws com.dsa.collections.exceptions.ListEmptyException
     {
         if(size == 0)

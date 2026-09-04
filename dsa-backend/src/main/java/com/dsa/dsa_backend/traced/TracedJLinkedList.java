@@ -1,7 +1,10 @@
 package com.dsa.dsa_backend.traced;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
+import com.dsa.collections.exceptions.ListEmptyException;
 import com.dsa.collections.linear.JLinkedList;
 import com.dsa.dsa_backend.engine.StepRecorder;
 import com.dsa.dsa_backend.engine.StepType;
@@ -68,7 +71,7 @@ public class TracedJLinkedList {
                 Map.of(),
                 "removing node on the index of the list : " + index
             );
-        } catch(IllegalArgumentException e) {
+        } catch(IllegalArgumentException | ListEmptyException e) {
             recorder.addRecord(
                 StepType.FAILED,
                 snapshot(),
@@ -91,7 +94,7 @@ public class TracedJLinkedList {
                 Map.of(),
                 "updating element on the node : " + index
             );
-        } catch(IllegalArgumentException e) {
+        } catch(IllegalArgumentException | ListEmptyException e) {
             recorder.addRecord(
                 StepType.FAILED,
                 snapshot(),
@@ -114,7 +117,7 @@ public class TracedJLinkedList {
                 Map.of(),
                 "value on the node : " + index + " is: " + value
             );
-        } catch(IllegalArgumentException e) {
+        } catch(ListEmptyException | IndexOutOfBoundsException e) {
             recorder.addRecord(
                 StepType.FAILED,
                 snapshot(),
@@ -286,7 +289,7 @@ public class TracedJLinkedList {
             fast+=2;
 
             recorder.addRecord(
-                StepType.COMPARE,
+                StepType.RUN,
                 snapshot(),
                 new int[] {slow, fast},
                 Map.of(),

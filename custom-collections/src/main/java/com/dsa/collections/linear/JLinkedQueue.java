@@ -1,60 +1,29 @@
 package com.dsa.collections.linear;
-import com.dsa.collections.interfaces.JSequencedCollection;
 
 public class JLinkedQueue<E> extends JLinkedList<E> {
-    private JLinkedList<E> que;
+    // No field as JLinkedList is already providing front and rear and list.
 
-    //Constructors
+    // Constructors
     public JLinkedQueue()
     {
-        que = new JLinkedList<>();
+        super();
     }
 
-    //is empty function
-    public boolean isQueueEmpty()
-    {
-        return que.isEmpty();
-    }
-
-    //size of queue returns size of the queue
-    public int sizeOfQueue()
-    {
-        return que.size();
-    }
-
-    //adds node at the last of the linklist 
+    // adds node at the last FIFO 
     public void enqueue(E e)
     {
-        que.addLast(e);
+        super.addLast(e);
     }
 
     //remove last node following FIFO
     public E dequeue()
     {
-        return que.removeFirst();
+        return super.removeFirst();
     }
 
-    //conversion of linklist into array
-    public Object[] queueIntoArray()
+    // get Front element (peek)
+    public E peek()
     {
-        return que.toArray();
-    }
-
-    //reverse of queue
-    public JSequencedCollection<E> reverseQue()
-    {
-        return que.reversed(); 
-    }
-
-    // get Front element
-    public E getFirstNode()
-    {
-        return que.getFirst();
-    }
-
-    // get last element
-    public E getLastNode()
-    {
-        return que.getLast();
-    }    
+        return super.getFirst();
+    }  
 }
