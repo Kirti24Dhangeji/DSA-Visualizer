@@ -261,6 +261,14 @@ public class TracedJLinkedList {
             end--;
 
         }
+
+        recorder.addRecord(
+            StepType.REVERSED,
+            snapshot(),
+            new int[] {},
+            Map.of(),
+            "List is reversed"
+        );
         return true;
 
     }

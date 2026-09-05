@@ -4,6 +4,7 @@ com\dsa\collections\linear\JStack.class
 com\dsa\collections\linear\JLinkedList$1.class
 com\dsa\collections\linear\JArrayList.class
 com\dsa\collections\interfaces\JQueue.class
+com\dsa\collections\associative\JTreeMap.class
 com\dsa\collections\interfaces\JCollection.class
 com\dsa\collections\interfaces\JSet.class
 com\dsa\collections\linear\JArrayList$1.class

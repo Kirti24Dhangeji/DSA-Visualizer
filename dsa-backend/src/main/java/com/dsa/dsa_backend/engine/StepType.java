@@ -7,7 +7,7 @@ public enum StepType {
     SET,
     GET,
 
-    // searching & sorting
+    // Searching & Sorting
     COMPARE,
     SHIFT,
     FOUND, 
@@ -15,10 +15,13 @@ public enum StepType {
     SWAP,
     SORT,
 
-    // failed step (for handle exception)
+    // Failed Step (for handle exception)
     FAILED,
 
-    //Middle element
+    // Middle element
     RUN,
-    MIDDLE
+    MIDDLE,
+
+    // Reverse
+    REVERSED
 }
