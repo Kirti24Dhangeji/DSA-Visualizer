@@ -8,6 +8,7 @@ import com.dsa.collections.interfaces.JCollection;
 import com.dsa.collections.interfaces.JList;
 import com.dsa.collections.interfaces.JSet;
 import com.dsa.collections.linear.JArrayList;
+import com.dsa.collections.linear.JHashSet;
 
 public class JTreeMap<K, V> implements JMap<K, V> {
 
@@ -53,8 +54,7 @@ public class JTreeMap<K, V> implements JMap<K, V> {
      */
     private Node<K, V> insert(Node<K, V> curr, K key, V value) {
         if(curr == null) {
-            root = new Node<>(key, value);
-            return root;
+            return new Node<>(key, value);
         }
 
         int result = ((Comparable<K>) key).compareTo(curr.item.key);
@@ -163,8 +163,7 @@ public class JTreeMap<K, V> implements JMap<K, V> {
 
     @Override
     public boolean containsKey(Object key) {
-        JSet<K> keys = keySet();
-        return keys.contains(key);
+        return search(root, (K) key) != null;
     }
 
     @Override
@@ -185,14 +184,31 @@ public class JTreeMap<K, V> implements JMap<K, V> {
 
     @Override
     public V put(K key, V value) {
+        if(key == null || value == null)
+            throw new IllegalArgumentException();
+        
+        if(containsKey(key)) {
+            setValue(key, value);
+            return value;
+        }
+
         root = insert(root, key, value);
+        size++;
         return value;
     }
 
     @Override
     public V remove(K key) {
+        if(key == null)
+            throw new IllegalArgumentException();
+        
+        if(!containsKey(key))
+            throw new IllegalArgumentException();
+
+        V value = get(key);
         root = delete(root, key);
-        return root.item.value;
+        size--;
+        return value;
     }
 
     @Override
@@ -227,7 +243,7 @@ public class JTreeMap<K, V> implements JMap<K, V> {
 
         JCollection<V> valueCollection = new JArrayList<>();
         for(int i=0; i<items.size(); i++)
-            valueCollection.add((V) items.get(i).key);
+            valueCollection.add((V) items.get(i).value);
 
         return valueCollection;
     }

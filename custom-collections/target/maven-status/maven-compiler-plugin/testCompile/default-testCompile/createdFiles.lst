@@ -1,6 +1,8 @@
 com\dsa\collections\linear\JLinkedListTest$ThrowingRunnable.class
+com\dsa\collections\linear\JHashSetTest.class
+com\dsa\collections\linear\JLinkedListTest.class
+com\dsa\collections\linear\JHashSetTest$ThrowingRunnable.class
 com\dsa\collections\linear\JStackTest.class
 com\dsa\collections\linear\JQueueTest$ThrowingRunnable.class
-com\dsa\collections\linear\JLinkedListTest.class
 com\dsa\collections\linear\JArrayListTest.class
 com\dsa\collections\linear\JQueueTest.class

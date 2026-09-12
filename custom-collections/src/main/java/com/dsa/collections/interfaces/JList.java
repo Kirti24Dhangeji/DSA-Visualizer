@@ -9,5 +9,8 @@ public interface JList<E> extends JSequencedCollection<E> {
     void add(int index, E element);
     E remove(int index) throws com.dsa.collections.exceptions.ListEmptyException;
     int indexOf(Object o) throws com.dsa.collections.exceptions.ListEmptyException;
+
+    boolean containsAll(JCollection<?> c) throws com.dsa.collections.exceptions.ListEmptyException;
+    boolean addAll(JCollection<E> c);
     
 }

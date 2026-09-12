@@ -8,8 +8,6 @@ public interface JCollection<E> extends JIterable<E> {
     Object[] toArray();
     boolean add(E e);
     boolean remove(Object o);
-    boolean containsAll(JCollection<?> c) throws com.dsa.collections.exceptions.ListEmptyException;
-    boolean addAll(JCollection<E> c);
     void clear();
     
 }

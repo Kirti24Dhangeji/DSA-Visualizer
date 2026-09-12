@@ -1,9 +1,12 @@
+com\dsa\collections\associative\JMap.class
 com\dsa\collections\interfaces\JSequencedCollection.class
 com\dsa\collections\exceptions\ListEmptyException.class
 com\dsa\collections\linear\JStack.class
+com\dsa\collections\associative\JTreeMap$Node.class
 com\dsa\collections\linear\JLinkedList$1.class
 com\dsa\collections\linear\JArrayList.class
 com\dsa\collections\interfaces\JQueue.class
+com\dsa\collections\associative\JTreeMap$Item.class
 com\dsa\collections\associative\JTreeMap.class
 com\dsa\collections\interfaces\JCollection.class
 com\dsa\collections\interfaces\JSet.class
@@ -11,7 +14,10 @@ com\dsa\collections\linear\JArrayList$1.class
 com\dsa\collections\interfaces\JIterable.class
 com\dsa\collections\linear\JLinkedQueue.class
 com\dsa\collections\exceptions\StackEmptyException.class
+com\dsa\collections\linear\JHashSet$1.class
+com\dsa\collections\linear\JHashSet.class
 com\dsa\collections\interfaces\JList.class
 com\dsa\collections\linear\JLinkedList$Node.class
+com\dsa\collections\associative\JComparator.class
 com\dsa\collections\linear\JLinkedList.class
 com\dsa\collections\iterator\JIterator.class
