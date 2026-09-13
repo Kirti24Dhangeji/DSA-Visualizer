@@ -16,7 +16,7 @@ public class JArrayList<E> implements JList<E> {
     /* -------------------- Helper methods -------------------- */
     private void resize() {
         if(array.length == capacity) {
-            Object new_array[] = new Object[capacity*2]; // creates larger array with twice of size.
+            Object new_array[] = new Object[capacity = capacity*2]; // creates larger array with twice of size.
             System.arraycopy(array, 0, new_array, 0, array.length);
             array = new_array; // make the original reference point to the new array
         }

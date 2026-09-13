@@ -2,16 +2,6 @@ package com.dsa.collections.associative;
 
 import java.util.Arrays;
 
-/**
- * Custom test suite for JTreeMap (no JUnit — matches the project's existing
- * check()/checkThrows()/printSummary() testing convention).
- *
- * Compile (from custom-collections module):
- *   mvn clean test-compile
- * Run directly:
- *   java -cp target/classes;target/test-classes com.dsa.collections.associative.JTreeMapTest
- *   (use ':' instead of ';' on non-Windows)
- */
 public class JTreeMapTest {
 
     private static int totalTests = 0;
@@ -91,7 +81,7 @@ public class JTreeMapTest {
         testKeySet();
         testValues_ContainsAllAndSortedByKey();
         testClear();
-        // testLargeDataset_AllKeysSurviveInsertion();
+        testLargeDataset_AllKeysSurviveInsertion();
         testStringKeys();
 
         printSummary();
@@ -329,26 +319,26 @@ public class JTreeMapTest {
                 && map.containsKey(100));
     }
 
-    // private static void testLargeDataset_AllKeysSurviveInsertion() {
-    //     System.out.println("\n--- regression guard: many sequential inserts (stresses insert()'s root handling) ---");
+    private static void testLargeDataset_AllKeysSurviveInsertion() {
+        System.out.println("\n--- regression guard: many sequential inserts (stresses insert()'s root handling) ---");
 
-    //     JTreeMap<Integer, String> map = new JTreeMap<>();
-    //     int n = 40;
-    //     for (int i = 0; i < n; i++) {
-    //         map.put(i, "val" + i);
-    //     }
+        JTreeMap<Integer, String> map = new JTreeMap<>();
+        int n = 40;
+        for (int i = 0; i < n; i++) {
+            map.put(i, "val" + i);
+        }
 
-    //     boolean allFound = true;
-    //     for (int i = 0; i < n; i++) {
-    //         if (!map.containsKey(i) || !("val" + i).equals(map.get(i))) {
-    //             allFound = false;
-    //             break;
-    //         }
-    //     }
-    //     check("every one of " + n + " sequentially inserted keys is retrievable", allFound);
-    //     check("KNOWN ISSUE — size() equals " + n + " after " + n + " distinct inserts", map.size() == n);
-    //     check("keySet() size equals " + n + " after " + n + " distinct inserts", map.keySet().size() == n);
-    // }
+        boolean allFound = true;
+        for (int i = 0; i < n; i++) {
+            if (!map.containsKey(i) || !("val" + i).equals(map.get(i))) {
+                allFound = false;
+                break;
+            }
+        }
+        check("every one of " + n + " sequentially inserted keys is retrievable", allFound);
+        check("KNOWN ISSUE — size() equals " + n + " after " + n + " distinct inserts", map.size() == n);
+        check("keySet() size equals " + n + " after " + n + " distinct inserts", map.keySet().size() == n);
+    }
 
     private static void testStringKeys() {
         System.out.println("\n--- generic type check with String keys ---");
