@@ -11,6 +11,22 @@ public class JHashSet<E> implements JSet<E> {
     private static final double LOAD_FACTOR = 0.75;
     private final Object DELETED = new Object();
 
+    /* Function to help the backend */
+    public Object[] getElements() {return elements; }
+
+    public int indexOf(E element) {
+        int index = indexFor(element);
+        for(int i = 0; i<elements.length; i++) {
+            if(elements[index] == null) {
+                return -1; // Element not found
+            } else if(elements[index] != DELETED && elements[index].equals(element)) {
+                return index;
+            }
+            index = Math.floorMod(index+1, elements.length);
+        }
+        return -1;
+    }
+
     /* HELPER FUNCTIONS */
     private int hash(Object element) {
         return element == null ? 0 : element.hashCode();

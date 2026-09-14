@@ -14,8 +14,8 @@ public class TracedJQueue {
     private final JLinkedQueue<Integer> queue;
     private final StepRecorder recorder;
 
-    private List<Integer> snapshot() {
-        List<Integer> updated_list = new ArrayList<>();
+    private List<Object> snapshot() {
+        List<Object> updated_list = new ArrayList<>();
 
         for(int i=0; i<queue.size(); i++)
             updated_list.add(queue.get(i));

@@ -10,7 +10,7 @@ import java.util.Map;
  */
 public class Step {
     private final StepType stepType;
-    private final List<Integer> snapshot;
+    private final List<Object> snapshot;
     private final int highlightedIndices[];
     private final Map<String, Integer> helpers;
     private final String description;
@@ -18,7 +18,7 @@ public class Step {
     // Constructor
     public Step(
         StepType stepType,
-        List<Integer> snapshot,
+        List<Object> snapshot,
         int highlightedIndices[],
         Map<String, Integer> helpers,
         String description
@@ -32,7 +32,7 @@ public class Step {
 
     // Getters
     public StepType getStepType() {return stepType;}
-    public List<Integer> getSnapshot() {return snapshot;}
+    public List<Object> getSnapshot() {return snapshot;}
     public int[] getHighlightedIndices() {return highlightedIndices;}
     public Map<String, Integer> getHelpers() {return helpers;}
     public String getDescription() {return description;}

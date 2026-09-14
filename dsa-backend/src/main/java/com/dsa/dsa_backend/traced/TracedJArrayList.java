@@ -12,8 +12,8 @@ public class TracedJArrayList {
     private final JArrayList<Integer> list;
     private final StepRecorder recorder;
 
-    private List<Integer> snapshot() {
-        List<Integer> updated_list = new ArrayList<>();
+    private List<Object> snapshot() {
+        List<Object> updated_list = new ArrayList<>();
 
         for(int i=0; i<list.size(); i++)
             updated_list.add(list.get(i));

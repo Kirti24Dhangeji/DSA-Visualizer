@@ -16,7 +16,7 @@ public class StepRecorder {
         steps = new ArrayList<>();
     }
 
-    public boolean addRecord(StepType stepType, List<Integer> snapshot, int highlightedIndices[], Map<String, Integer> helpers, String description) {
+    public boolean addRecord(StepType stepType, List<Object> snapshot, int highlightedIndices[], Map<String, Integer> helpers, String description) {
         return steps.add(new Step(stepType, snapshot, highlightedIndices, helpers, description));
     }
 
