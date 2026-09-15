@@ -1,7 +1,9 @@
 package com.dsa.collections.associative;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.TreeMap;
 
 import com.dsa.collections.interfaces.JCollection;
@@ -15,13 +17,19 @@ public class JTreeMap<K, V> implements JMap<K, V> {
     /**
      * Item class which represent a pair
      */
-    private static class Item<K, V> {
+    public static class Item<K, V> extends Object {
         K key;
         V value;
         
         Item(K key, V value) {
             this.key = key;
             this.value = value;
+        }
+
+        // toString for accessing data outside the package
+        @Override 
+        public String toString() {
+            return "[" + key + ", " + value + "]";
         }
     }
 
@@ -46,6 +54,17 @@ public class JTreeMap<K, V> implements JMap<K, V> {
     // reference to the BST (tree)
     private Node<K, V> root;
     private int size;
+
+    /**
+     * ----------------------------------------------------------------------
+     * Function to Help the Backend
+     * ----------------------------------------------------------------------
+     */
+    public List<Item<K, V>> getPreorder() {
+        List<Item<K, V>> pre_order = new ArrayList<Item<K, V>>();
+        preorder(root, pre_order);
+        return pre_order;
+    }
     
     /**
      * ----------------------------------------------------------------------
@@ -130,7 +149,7 @@ public class JTreeMap<K, V> implements JMap<K, V> {
         return null;
     }
 
-    private void inorder(Node<K, V> curr, JCollection<Item> set) {
+    private void inorder(Node<K, V> curr, JCollection<Item<K, V>> set) {
         if(curr != null) {
             inorder(curr.left, set);
 
@@ -138,6 +157,16 @@ public class JTreeMap<K, V> implements JMap<K, V> {
             set.add(curr.item);
             
             inorder(curr.right, set);
+        }
+    }
+
+    private void preorder(Node<K, V> curr, List<Item<K, V>> set) {
+        if(curr != null) {
+            // add the current's items's key into the set.
+            set.add(curr.item);
+
+            preorder(curr.left, set);            
+            preorder(curr.right, set);
         }
     }
 
@@ -224,7 +253,7 @@ public class JTreeMap<K, V> implements JMap<K, V> {
 
     @Override
     public JSet<K> keySet() {
-        JList<Item> items = new JArrayList<>();
+        JList<Item<K, V>> items = new JArrayList<>();
 
         inorder(root, items);
 
@@ -237,7 +266,7 @@ public class JTreeMap<K, V> implements JMap<K, V> {
 
     @Override
     public JCollection<V> values() {
-        JList<Item> items = new JArrayList<>();
+        JList<Item<K, V>> items = new JArrayList<>();
 
         inorder(root, items);
 
