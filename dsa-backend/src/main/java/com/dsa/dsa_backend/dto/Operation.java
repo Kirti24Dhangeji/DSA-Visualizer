@@ -9,11 +9,11 @@ public class Operation {
     @NotBlank(message = "operation must have a name (operation name)")
     private String name;
 
-    private List<Integer> arguments;
+    private List<Object> arguments;
 
     public Operation() {}
 
-    public Operation(String name, List<Integer> arguments) {
+    public Operation(String name, List<Object> arguments) {
         this.name = name;
         this.arguments = arguments;
     }
@@ -26,11 +26,11 @@ public class Operation {
         this.name = name;
     }
 
-    public List<Integer> getArguments() {
+    public List<Object> getArguments() {
         return arguments;
     }
 
-    public void setArguments(List<Integer> arguments) {
+    public void setArguments(List<Object> arguments) {
         this.arguments = arguments;
     }
 }

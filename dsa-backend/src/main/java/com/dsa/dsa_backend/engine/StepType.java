@@ -23,5 +23,8 @@ public enum StepType {
     MIDDLE,
 
     // Reverse
-    REVERSED
+    REVERSED,
+
+    // Duplicate elements
+    EXISTING
 }

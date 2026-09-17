@@ -35,7 +35,19 @@ public class TracedJHashSet {
     }
 
     public boolean insert(int element) {
-        hashSet.add(element);
+        if(!hashSet.add(element)) {
+            int index = hashSet.indexOf(element);
+
+            recorder.addRecord(
+                    StepType.EXISTING,
+                    snapshot(),
+                    new int[] {index},
+                    Map.of(),
+                    "element " + element + " is ALREADY EXISTING in the JHashSet at the index: " + index
+            );
+
+            return true;
+        }
         int index = hashSet.indexOf(element);
 
         recorder.addRecord(
@@ -43,7 +55,7 @@ public class TracedJHashSet {
                 snapshot(),
                 new int[] {index},
                 Map.of(),
-                "element" + element + " is INSERTED in the JHashSet at the index: " + index
+                "element " + element + " is INSERTED in the JHashSet at the index: " + index
         );
 
         return true;
@@ -58,7 +70,7 @@ public class TracedJHashSet {
                     snapshot(),
                     new int[] {},
                     Map.of(),
-                    "element" + element + " is NOT PRESENT the JHashSet"
+                    "element " + element + " is NOT PRESENT the JHashSet"
             );
 
             return true;
@@ -69,7 +81,7 @@ public class TracedJHashSet {
                 snapshot(),
                 new int[] {index},
                 Map.of(),
-                "element" + element + " is DELETED from the JHashSet from the index: " + index
+                "element " + element + " is DELETED from the JHashSet from the index: " + index
         );
 
         return true;
@@ -84,7 +96,7 @@ public class TracedJHashSet {
                     snapshot(),
                     new int[] {},
                     Map.of(),
-                    "element" + element + " is NOT PRESENT the JHashSet"
+                    "element " + element + " is NOT PRESENT the JHashSet"
             );
 
             return true;
@@ -95,7 +107,7 @@ public class TracedJHashSet {
                 snapshot(),
                 new int[] {index},
                 Map.of(),
-                "element" + element + " is FOUND in the JHashSet at the index: " + index
+                "element " + element + " is FOUND in the JHashSet at the index: " + index
         );
 
         return true;

@@ -27,7 +27,7 @@ public class JLinkedListController {
                 switch (op.getName()) {
                     case "add" -> {
                         
-                        if(!linkedList.add(op.getArguments().get(0)))
+                        if(!linkedList.add((int) op.getArguments().get(0)))
                         {
                             throw new IllegalCallerException("steps not recorded.!");
                         }
@@ -35,7 +35,7 @@ public class JLinkedListController {
 
                     case "addFirst" -> {
 
-                        if(!linkedList.addFirst(op.getArguments().get(0)))
+                        if(!linkedList.addFirst((int) op.getArguments().get(0)))
                         {
                             throw new IllegalCallerException("steps not recorded.!");
                         }
@@ -44,7 +44,7 @@ public class JLinkedListController {
 
                     case "remove" -> {
 
-                        if(!linkedList.remove(op.getArguments().get(0)))
+                        if(!linkedList.remove((int) op.getArguments().get(0)))
                         {
                             throw new IllegalCallerException("steps not recorded.!");
                         }
@@ -53,7 +53,7 @@ public class JLinkedListController {
 
                     case "set" -> {
 
-                        if(!linkedList.set(op.getArguments().get(0), op.getArguments().get(1)))
+                        if(!linkedList.set((int) op.getArguments().get(0), (int) op.getArguments().get(1)))
                         {
                             throw new IllegalCallerException("steps not recorded.!");
                         }
@@ -62,7 +62,7 @@ public class JLinkedListController {
 
                     case "get" -> {
 
-                        if(!linkedList.get(op.getArguments().get(0)))
+                        if(!linkedList.get((int) op.getArguments().get(0)))
                         {
                             throw new IllegalCallerException("steps not recorded.!");
                         }
@@ -71,7 +71,7 @@ public class JLinkedListController {
 
                     case "linearSearch" -> {
 
-                        if(!linkedList.linear_search(op.getArguments().get(0)))
+                        if(!linkedList.linear_search((int) op.getArguments().get(0)))
                         {
                             throw new IllegalCallerException("steps not recorded.!");
                         }

@@ -18,6 +18,5 @@ com\dsa\collections\linear\JHashSet$1.class
 com\dsa\collections\linear\JHashSet.class
 com\dsa\collections\interfaces\JList.class
 com\dsa\collections\linear\JLinkedList$Node.class
-com\dsa\collections\associative\JComparator.class
 com\dsa\collections\linear\JLinkedList.class
 com\dsa\collections\iterator\JIterator.class

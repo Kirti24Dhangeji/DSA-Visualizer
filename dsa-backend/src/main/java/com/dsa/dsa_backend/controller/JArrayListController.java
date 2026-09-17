@@ -26,7 +26,7 @@ public class JArrayListController {
                 switch (op.getName()) {
                     case "add" -> {
                         
-                        if(!arrayList.add(op.getArguments().get(0)))
+                        if(!arrayList.add((int) op.getArguments().get(0)))
                         {
                             throw new IllegalCallerException("steps not recorded.!");
                         }
@@ -34,7 +34,7 @@ public class JArrayListController {
 
                     case "addFirst" -> {
 
-                        if(!arrayList.addFirst(op.getArguments().get(0)))
+                        if(!arrayList.addFirst((int) op.getArguments().get(0)))
                         {
                             throw new IllegalCallerException("steps not recorded.!");
                         }
@@ -43,7 +43,7 @@ public class JArrayListController {
 
                     case "remove" -> {
 
-                        if(!arrayList.remove(op.getArguments().get(0)))
+                        if(!arrayList.remove((int) op.getArguments().get(0)))
                         {
                             throw new IllegalCallerException("steps not recorded.!");
                         }
@@ -52,7 +52,7 @@ public class JArrayListController {
 
                     case "set" -> {
 
-                        if(!arrayList.set(op.getArguments().get(0), op.getArguments().get(1)))
+                        if(!arrayList.set((int) op.getArguments().get(0), (int) op.getArguments().get(1)))
                         {
                             throw new IllegalCallerException("steps not recorded.!");
                         }
@@ -61,7 +61,7 @@ public class JArrayListController {
 
                     case "get" -> {
 
-                        if(!arrayList.get(op.getArguments().get(0)))
+                        if(!arrayList.get((int) op.getArguments().get(0)))
                         {
                             throw new IllegalCallerException("steps not recorded.!");
                         }
@@ -70,7 +70,7 @@ public class JArrayListController {
 
                     case "linearSearch" -> {
 
-                        if(!arrayList.linear_search(op.getArguments().get(0)))
+                        if(!arrayList.linear_search((int) op.getArguments().get(0)))
                         {
                             throw new IllegalCallerException("steps not recorded.!");
                         }
@@ -79,7 +79,7 @@ public class JArrayListController {
 
                     case "binarySearch" -> {
 
-                        if(!arrayList.binary_search(op.getArguments().get(0)))
+                        if(!arrayList.binary_search((int) op.getArguments().get(0)))
                         {
                             throw new IllegalCallerException("steps not recorded.!");
                         }

@@ -27,7 +27,7 @@ public class JQueueController {
                 switch (op.getName()) {
                     case "enqueue" -> {
                         
-                        if(!queue.enqueue(op.getArguments().get(0)))
+                        if(!queue.enqueue((int) op.getArguments().get(0)))
                         {
                             throw new IllegalCallerException("steps not recorded.!");
                         }

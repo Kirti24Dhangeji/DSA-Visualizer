@@ -65,13 +65,23 @@ public class JTreeMap<K, V> implements JMap<K, V> {
         preorder(root, pre_order);
         return pre_order;
     }
+
+    public List<K> getPath(K key) {
+        if(!this.containsKey(key)) {
+            return new ArrayList<>();
+        }
+
+        List<K> path = new ArrayList<>();
+        r_path(root, key, path);
+        return path;
+    }
     
     /**
      * ----------------------------------------------------------------------
      * Recursive Helper Functions
      * ----------------------------------------------------------------------
      */
-    private Node<K, V> insert(Node<K, V> curr, K key, V value) {
+    private  static <K, V> Node<K, V> insert(Node<K, V> curr, K key, V value) {
         if(curr == null) {
             return new Node<>(key, value);
         }
@@ -89,7 +99,7 @@ public class JTreeMap<K, V> implements JMap<K, V> {
         return curr;
     }
 
-    private Node<K, V> delete(Node<K, V> curr, K key) {
+    private  static <K, V> Node<K, V> delete(Node<K, V> curr, K key) {
         if(curr == null) {
             return null;
         }
@@ -120,7 +130,7 @@ public class JTreeMap<K, V> implements JMap<K, V> {
         return curr;
     }
 
-    private Node<K, V> max(Node<K, V> curr) {
+    private  static <K, V> Node<K, V> max(Node<K, V> curr) {
         if(curr.right != null) {
             return max(curr.right);
         }
@@ -128,7 +138,7 @@ public class JTreeMap<K, V> implements JMap<K, V> {
         return curr;
     }
 
-    private Node<K, V> min(Node<K, V> curr) {
+    private  static <K, V> Node<K, V> min(Node<K, V> curr) {
         if(curr.left != null) {
             return min(curr.left);
         }
@@ -136,7 +146,7 @@ public class JTreeMap<K, V> implements JMap<K, V> {
         return curr;
     }
 
-    private Node<K, V> search(Node<K, V> curr, K key) {
+    private  static <K, V> Node<K, V> search(Node<K, V> curr, K key) {
         if(curr != null) {
             int result = ((Comparable<K>) key).compareTo(curr.item.key);
 
@@ -149,7 +159,7 @@ public class JTreeMap<K, V> implements JMap<K, V> {
         return null;
     }
 
-    private void inorder(Node<K, V> curr, JCollection<Item<K, V>> set) {
+    private  static <K, V> void inorder(Node<K, V> curr, JCollection<Item<K, V>> set) {
         if(curr != null) {
             inorder(curr.left, set);
 
@@ -160,13 +170,31 @@ public class JTreeMap<K, V> implements JMap<K, V> {
         }
     }
 
-    private void preorder(Node<K, V> curr, List<Item<K, V>> set) {
+    private static <K, V> void preorder(Node<K, V> curr, List<Item<K, V>> set) {
         if(curr != null) {
             // add the current's items's key into the set.
             set.add(curr.item);
 
             preorder(curr.left, set);            
             preorder(curr.right, set);
+        }
+    }
+
+    private static <K, V> void r_path(Node<K, V> curr, K key, List<K> path) {
+        if(curr == null) {
+            return;
+        }
+
+        path.add(curr.item.key);
+
+        int result = ((Comparable<K>) key).compareTo(curr.item.key);
+
+        if(result < 0) {
+            r_path(curr.left, key, path);
+        } else if(result > 0) {
+            r_path(curr.right, key, path);
+        } else {
+            return;
         }
     }
 
