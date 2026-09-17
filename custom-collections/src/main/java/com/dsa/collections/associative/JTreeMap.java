@@ -26,6 +26,9 @@ public class JTreeMap<K, V> implements JMap<K, V> {
             this.value = value;
         }
 
+        public K getKey() {return key; }
+        public V getValue() {return value; }
+
         // toString for accessing data outside the package
         @Override 
         public String toString() {
@@ -66,12 +69,12 @@ public class JTreeMap<K, V> implements JMap<K, V> {
         return pre_order;
     }
 
-    public List<K> getPath(K key) {
+    public List<Item<K, V>> getPath(K key) {
         if(!this.containsKey(key)) {
             return new ArrayList<>();
         }
 
-        List<K> path = new ArrayList<>();
+        List<Item<K, V>> path = new ArrayList<>();
         r_path(root, key, path);
         return path;
     }
@@ -180,12 +183,12 @@ public class JTreeMap<K, V> implements JMap<K, V> {
         }
     }
 
-    private static <K, V> void r_path(Node<K, V> curr, K key, List<K> path) {
+    private static <K, V> void r_path(Node<K, V> curr, K key, List<Item<K, V>> path) {
         if(curr == null) {
             return;
         }
 
-        path.add(curr.item.key);
+        path.add(curr.item);
 
         int result = ((Comparable<K>) key).compareTo(curr.item.key);
 

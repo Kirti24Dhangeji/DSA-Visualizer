@@ -1,7 +1,6 @@
 package com.dsa.dsa_backend.traced;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -26,7 +25,7 @@ public class TracedJTreeMap {
     private int[] getHighlightedIndices(int element) {
         List<Object> preorderList = snapshot();
 
-        List<Integer> path = map.getPath(element);
+        List<Object> path = new ArrayList<>(map.getPath(element));
 
         int []indices = new int[path.size()];
         for(int i=0; i<indices.length; i++) {

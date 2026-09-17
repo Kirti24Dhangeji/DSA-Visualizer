@@ -1,5 +1,6 @@
 package com.dsa.collections.associative;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class JTreeMapTest {
@@ -83,6 +84,7 @@ public class JTreeMapTest {
         testClear();
         testLargeDataset_AllKeysSurviveInsertion();
         testStringKeys();
+        testPreOrder();
 
         printSummary();
     }
@@ -358,5 +360,32 @@ public class JTreeMapTest {
         var keys = map.keySet();
         check("keySet() contains all inserted String keys",
                 keys.contains("apple") && keys.contains("banana") && keys.contains("cherry"));
+    }
+
+    private static void testPreOrder() {
+        System.out.println("\n--- preorder traversal check ---");
+
+        JTreeMap<Integer, String> map = new JTreeMap<>();
+        map.put(100, "ABC");
+        map.put(50, "DEF");
+        map.put(120, "GHI");
+        map.put(130, "JKL");
+        map.put(20, "MNO");
+        map.put(70, "PQR");
+
+        java.util.List<Object> preorder = new ArrayList<>(map.getPreorder());
+        System.out.println(preorder);
+
+        java.util.List<Object> path = new ArrayList<>(map.getPath(70));
+        System.out.println(path);
+
+        int []indices = new int[path.size()];
+        for(int i=0; i<indices.length; i++) {
+            indices[i] = preorder.indexOf(path.get(i));
+        }
+
+        for(int idx : indices)
+            System.out.print(idx + " ");
+        System.out.println();
     }
 }
