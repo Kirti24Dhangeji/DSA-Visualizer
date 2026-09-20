@@ -36,6 +36,20 @@ public class TracedJTreeMap {
     }
 
     public boolean insert(int iKey, String sValue) {
+        if(map.containsKey(iKey)) {
+            map.put(iKey, sValue);
+
+            recorder.addRecord(
+                    StepType.SET,
+                    snapshot(),
+                    getHighlightedIndices(iKey),
+                    Map.of(),
+                    "Item: {" + iKey + ":" + sValue + "} is UPDATED by the " + sValue + " in the tree."
+            );
+
+            return true;
+        }
+
         map.put(iKey, sValue);
 
         recorder.addRecord(

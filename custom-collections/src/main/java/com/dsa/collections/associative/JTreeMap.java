@@ -166,8 +166,9 @@ public class JTreeMap<K, V> implements JMap<K, V> {
         if(curr != null) {
             inorder(curr.left, set);
 
-            // add the current's items's key into the set.
-            set.add(curr.item);
+            // add the current's item's key into the set.
+            set.add(new Item<>(curr.item.key , curr.item.value));
+
             
             inorder(curr.right, set);
         }
@@ -175,8 +176,8 @@ public class JTreeMap<K, V> implements JMap<K, V> {
 
     private static <K, V> void preorder(Node<K, V> curr, List<Item<K, V>> set) {
         if(curr != null) {
-            // add the current's items's key into the set.
-            set.add(curr.item);
+            // add the current's item's key into the set.
+            set.add(new Item<>(curr.item.key , curr.item.value));
 
             preorder(curr.left, set);            
             preorder(curr.right, set);
@@ -188,7 +189,7 @@ public class JTreeMap<K, V> implements JMap<K, V> {
             return;
         }
 
-        path.add(curr.item);
+        path.add(new Item<>(curr.item.key , curr.item.value));
 
         int result = ((Comparable<K>) key).compareTo(curr.item.key);
 
