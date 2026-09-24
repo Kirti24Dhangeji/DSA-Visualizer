@@ -2,10 +2,19 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import Button from './Button.jsx'
 
+// An arg is a number field unless its config says otherwise (e.g. JTreeMap's
+// value, which the backend stores as a String even when it looks numeric).
+const isTextArg = (arg) => arg.type === 'text'
+
+function isValidValue(arg, raw) {
+  if (isTextArg(arg)) return raw.trim() !== ''
+  return raw.trim() !== '' && !Number.isNaN(Number(raw))
+}
+
 export default function ArgumentForm({ operation, onSubmit, onCancel }) {
   const [values, setValues] = useState(() => operation.args.map(() => ''))
 
-  const isValid = values.every((v) => v.trim() !== '' && !Number.isNaN(Number(v)))
+  const isValid = operation.args.every((arg, i) => isValidValue(arg, values[i] ?? ''))
 
   function handleChange(i, raw) {
     setValues((prev) => prev.map((v, idx) => (idx === i ? raw : v)))
@@ -14,7 +23,7 @@ export default function ArgumentForm({ operation, onSubmit, onCancel }) {
   function handleSubmit(e) {
     e.preventDefault()
     if (!isValid) return
-    onSubmit(values.map(Number))
+    onSubmit(values.map((v, i) => (isTextArg(operation.args[i]) ? v.trim() : Number(v))))
   }
 
   return (
@@ -38,13 +47,14 @@ export default function ArgumentForm({ operation, onSubmit, onCancel }) {
                 {arg.label}
               </span>
               <input
-                type="number"
+                type={isTextArg(arg) ? 'text' : 'number'}
                 value={values[i]}
                 onChange={(e) => handleChange(i, e.target.value)}
                 autoFocus={i === 0}
-                className="w-24 rounded-md border border-graphite-500 bg-graphite-900 px-2.5 py-1.5
-                  font-mono text-sm text-mist-100 outline-none focus-visible:border-cell-shift"
-                placeholder="0"
+                className={`rounded-md border border-graphite-500 bg-graphite-900 px-2.5 py-1.5
+                  font-mono text-sm text-mist-100 outline-none focus-visible:border-cell-shift
+                  ${isTextArg(arg) ? 'w-36' : 'w-24'}`}
+                placeholder={arg.placeholder ?? (isTextArg(arg) ? 'text' : '0')}
               />
             </label>
           ))

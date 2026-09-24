@@ -11,4 +11,9 @@ export const StepType = {
   NOT_FOUND: 'NOT_FOUND',
   SWAP: 'SWAP',
   SORT: 'SORT',
+  FAILED: 'FAILED',
+  RUN: 'RUN',
+  MIDDLE: 'MIDDLE',
+  REVERSED: 'REVERSED',
+  EXISTING: 'EXISTING',
 }

@@ -4,9 +4,11 @@ import ArrayListWorkspace from './modules/arraylist/ArrayListWorkspace.jsx'
 import LinkedListWorkspace from './modules/linkedlist/LinkedListWorkspace.jsx'
 import StackWorkspace from './modules/stack/StackWorkspace.jsx'
 import QueueWorkspace from './modules/queue/QueueWorkspace.jsx'
+import HashSetWorkspace from './modules/hashset/HashSetWorkspace.jsx'
+import TreeMapWorkspace from './modules/treemap/TreeMapWorkspace.jsx'
 
 // No React Router yet — routes between Home and a structure's workspace via
-// simple state. Add real routing once every module (tree, graph) is ready.
+// simple state. Add real routing once a module needs deep-linking.
 export default function App() {
   const [activeModule, setActiveModule] = useState(null) // null = Home
 
@@ -21,6 +23,10 @@ export default function App() {
       return <StackWorkspace onBack={back} />
     case 'queue':
       return <QueueWorkspace onBack={back} />
+    case 'hashset':
+      return <HashSetWorkspace onBack={back} />
+    case 'treemap':
+      return <TreeMapWorkspace onBack={back} />
     default:
       return <Home onSelect={setActiveModule} />
   }

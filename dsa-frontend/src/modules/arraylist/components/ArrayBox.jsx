@@ -29,10 +29,8 @@ export default function ArrayBox({ value, index, active, colorToken }) {
       transition={{ type: 'spring', stiffness: 500, damping: 32 }}
       className="flex flex-col items-center gap-1.5"
     >
-      {/* memory-address style index label */}
-      <span className="font-mono text-[11px] text-mist-400 tabular-nums">
-        0x{String(index).padStart(2, '0')}
-      </span>
+      {/* plain slot index: 0, 1, 2 … */}
+      <span className="font-mono text-[11px] text-mist-400 tabular-nums">{index}</span>
 
       <motion.div
         animate={{
