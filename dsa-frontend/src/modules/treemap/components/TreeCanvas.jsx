@@ -64,7 +64,7 @@ export default function TreeCanvas({ step, colorToken }) {
                 {n.key}
               </text>
               {showValue && (
-                <text x={NODE / 2} y={NODE + 20} textAnchor="middle" fontSize="12" fill="mist-300">
+                <text x={NODE / 2} y={NODE + 20} textAnchor="middle" fontSize="16" fill="#FFFFFF">
                   {n.value}
                 </text>
               )}

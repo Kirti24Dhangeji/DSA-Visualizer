@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.TreeMap;
 
 import com.dsa.collections.interfaces.JCollection;
@@ -33,6 +34,22 @@ public class JTreeMap<K, V> implements JMap<K, V> {
         @Override 
         public String toString() {
             return "[" + key + ", " + value + "]";
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if(o == null)
+                return false;
+
+            if(!(o instanceof Item))
+                return false;
+
+            return this.hashCode() == o.hashCode();
+        }
+
+        @Override
+        public int hashCode() {
+            return (Objects.hash(key, value));
         }
     }
 
